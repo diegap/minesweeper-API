@@ -6,11 +6,16 @@ object DefaultBoardFactory : BoardFactory {
 		val cells = mutableMapOf<Position, Cell>().apply {
 			repeat(rows.value) { row ->
 				repeat(cols.value) { col ->
-					val position = Position(x = col, y = row)
-					put(position, Cell(position, emptySet()))
+					val position = Position(
+							x = col,
+							y = row,
+							edge = Edge(cols.value - 1, rows.value - 1)
+					)
+					put(position, Cell(position))
 				}
 			}
 		}
 		return Board(cells, user)
 	}
+
 }
