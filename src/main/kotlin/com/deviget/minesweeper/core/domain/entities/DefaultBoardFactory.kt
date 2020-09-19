@@ -9,7 +9,7 @@ object DefaultBoardFactory : BoardFactory {
 					val position = Position(
 							x = col,
 							y = row,
-							edge = Edge(cols.value - 1, rows.value - 1)
+							edge = Edge(cols.value, rows.value)
 					)
 					put(position, Cell(position))
 				}

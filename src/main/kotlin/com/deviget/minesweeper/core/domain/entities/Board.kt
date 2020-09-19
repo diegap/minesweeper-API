@@ -22,7 +22,10 @@ class Cell(val position: Position) {
 
 }
 
-data class Edge(val xLimit: Int, val yLimit: Int)
+data class Edge(val cols: Int, val rows: Int) {
+	val xLimit get() = cols - 1
+	val yLimit get() = rows - 1
+}
 
 data class Position(val x: Int, val y: Int, private val edge: Edge) {
 	init {

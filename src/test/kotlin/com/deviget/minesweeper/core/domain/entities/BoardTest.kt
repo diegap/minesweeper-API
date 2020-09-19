@@ -19,7 +19,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(0, 0, Edge(2, 2)))
+		whenCellIsRetrivedAt(Position(0, 0, Edge(3, 3)))
 
 		thenCellHasAdjacents(3)
 	}
@@ -33,7 +33,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(1, 1, Edge(2, 2)))
+		whenCellIsRetrivedAt(Position(1, 1, Edge(3, 3)))
 
 		thenCellHasAdjacents(8)
 	}
@@ -47,7 +47,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(2, 2, Edge(2, 2)))
+		whenCellIsRetrivedAt(Position(2, 2, Edge(3, 3)))
 
 		thenCellHasAdjacents(3)
 	}
