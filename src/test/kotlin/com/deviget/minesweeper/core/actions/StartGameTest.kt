@@ -1,14 +1,15 @@
 package com.deviget.minesweeper.core.actions
 
 import com.deviget.minesweeper.core.domain.entities.Board
+import com.deviget.minesweeper.core.domain.entities.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.Cols
 import com.deviget.minesweeper.core.domain.entities.Mines
 import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
+import com.nhaarman.mockitokotlin2.atMost
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
@@ -77,7 +78,7 @@ class StartGameTest {
 	}
 
 	private fun givenStartGameAction() {
-		startGame = StartGame(boardRepository)
+		startGame = StartGame(boardRepository, BoardFactory)
 	}
 
 	private fun whenActionIsInvoked() {
@@ -88,7 +89,7 @@ class StartGameTest {
 		board shouldNotBe null
 		board.cellsByPosition.size shouldBeEqualTo cellsSize
 
-		verify(boardRepository, times(1)).save(board)
+		verify(boardRepository, atMost(1)).save(board)
 	}
 
 }
