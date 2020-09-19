@@ -1,6 +1,6 @@
 package com.deviget.minesweeper.core.domain.entities
 
-class Board(val cells: Map<Position, Cell>, val user: User)
+class Board(val cellsByPosition: Map<Position, Cell>, val user: User)
 
 class Cell(val position: Position, val adjacents: Set<Position>)
 

@@ -6,12 +6,17 @@ import com.deviget.minesweeper.core.domain.entities.Mines
 import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.repositories.BoardRepository
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.Test
 
 class StartGameTest {
 
+	private val boardRepository: BoardRepository = mock()
 	private lateinit var board: Board
 	private lateinit var rows: Rows
 	private lateinit var cols: Cols
@@ -28,7 +33,40 @@ class StartGameTest {
 
 		whenActionIsInvoked()
 
-		thenBoardIsCreated()
+		thenBoardIsCreatedWithCellsSize(9)
+	}
+
+	@Test
+	fun `Create a 2x3 board`() {
+
+		givenInputParams(2, 3, 1, "user1")
+		givenStartGameAction()
+
+		whenActionIsInvoked()
+
+		thenBoardIsCreatedWithCellsSize(6)
+	}
+
+	@Test
+	fun `Create a 3x2 board`() {
+
+		givenInputParams(3, 2, 1, "user1")
+		givenStartGameAction()
+
+		whenActionIsInvoked()
+
+		thenBoardIsCreatedWithCellsSize(6)
+	}
+
+	@Test
+	fun `Create a 4x4 board`() {
+
+		givenInputParams(4, 4, 1, "user1")
+		givenStartGameAction()
+
+		whenActionIsInvoked()
+
+		thenBoardIsCreatedWithCellsSize(16)
 	}
 
 	private fun givenInputParams(rowSize: Int, colSize: Int, mineSize: Int, userName: String) {
@@ -39,16 +77,18 @@ class StartGameTest {
 	}
 
 	private fun givenStartGameAction() {
-		startGame = StartGame()
+		startGame = StartGame(boardRepository)
 	}
 
 	private fun whenActionIsInvoked() {
 		board = startGame(rows, cols, mines, user)
 	}
 
-	private fun thenBoardIsCreated() {
+	private fun thenBoardIsCreatedWithCellsSize(cellsSize: Int) {
 		board shouldNotBe null
-		board.cells.size shouldBeEqualTo 9
+		board.cellsByPosition.size shouldBeEqualTo cellsSize
+
+		verify(boardRepository, times(1)).save(board)
 	}
 
 }

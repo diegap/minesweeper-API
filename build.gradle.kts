@@ -31,7 +31,7 @@ dependencies {
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
     testImplementation("org.amshove.kluent:kluent:1.61")
 }
