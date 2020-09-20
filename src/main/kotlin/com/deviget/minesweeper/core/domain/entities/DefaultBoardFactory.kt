@@ -1,9 +1,16 @@
 package com.deviget.minesweeper.core.domain.entities
 
-object DefaultBoardFactory : BoardFactory {
+interface MinerRandomizer {
+	fun getMinedPositions(rows: Rows, cols: Cols, mines: Mines): Set<Position>
+}
+
+class DefaultBoardFactory(
+		private val miner: MinerRandomizer
+) : BoardFactory {
 
 	override fun createBoard(rows: Rows, cols: Cols, mines: Mines, user: User) =
 			mutableMapOf<Position, Cell>().apply {
+				val minedPositions = miner.getMinedPositions(rows, cols, mines)
 				repeat(rows.value) { row ->
 					repeat(cols.value) { col ->
 						val position = Position(
@@ -11,7 +18,12 @@ object DefaultBoardFactory : BoardFactory {
 								y = row,
 								edge = Edge(cols, rows)
 						)
-						put(position, Cell(position))
+						put(position, Cell(
+								position = position,
+								cellValue = CellValue(
+										position.adjacentPositions.intersect(minedPositions).size
+								)
+						))
 					}
 				}
 			}.run {
@@ -19,3 +31,4 @@ object DefaultBoardFactory : BoardFactory {
 			}
 
 }
+

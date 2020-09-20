@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 
@@ -65,7 +66,8 @@ class BoardFactoryTest {
 	}
 
 	private fun givenBoardFactory() {
-		boardFactory = DefaultBoardFactory
+		val miner: MinerRandomizer = mock()
+		boardFactory = DefaultBoardFactory(miner)
 	}
 
 	private fun whenFactoryIsInvokedWith(rows: Rows, cols: Cols, mines: Mines, user: User) {

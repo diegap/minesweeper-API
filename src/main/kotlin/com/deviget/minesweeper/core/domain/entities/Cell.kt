@@ -8,29 +8,27 @@ enum class CellVisibility {
 	VISIBLE
 }
 
+data class CellValue(val value: Int) {
+	init {
+		require(value >= 0) {
+			"Cell value must be equal or greater than 0"
+		}
+	}
+}
+
 class Cell(
 		val position: Position,
-		private var visibility: CellVisibility = HIDDEN
+		private var visibility: CellVisibility = HIDDEN,
+		val cellValue: CellValue
 ) {
+
+	val adjacentPositions get() = position.adjacentPositions
+	val value get() = cellValue.value
 
 	fun reveal() {
 		visibility = VISIBLE
-
 	}
 
 	fun isVisible() = visibility == VISIBLE
 
-	constructor(position: Position, content: String) : this(position)
-
-	val adjacentPositions
-		get() = mutableSetOf<Position?>().apply {
-			add(position.upperLeft)
-			add(position.upper)
-			add(position.upperRight)
-			add(position.left)
-			add(position.right)
-			add(position.lowerLeft)
-			add(position.lower)
-			add(position.lowerRight)
-		}.filterNotNull().toSet()
 }

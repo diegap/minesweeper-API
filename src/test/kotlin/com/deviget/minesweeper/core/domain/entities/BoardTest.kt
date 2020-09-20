@@ -1,14 +1,21 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
+import org.junit.Before
 import org.junit.Test
 
 class BoardTest {
 
-	private val boardFactory: BoardFactory = DefaultBoardFactory
+	private lateinit var boardFactory: BoardFactory
 	private lateinit var cell: Cell
 	private lateinit var board: Board
+
+	@Before
+	fun init() {
+		boardFactory = DefaultBoardFactory(mock())
+	}
 
 	@Test
 	fun `Retrieve adjacent cells at (0,0) on a 3x3 board`() {
