@@ -26,7 +26,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrievedAt(Position(0, 0, Edge(Cols(3), Rows(3))))
+		whenCellIsRetrievedAt(Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))))
 
 		thenCellHasAdjacentPositions(3)
 	}
@@ -40,7 +40,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrievedAt(Position(1, 1, Edge(Cols(3), Rows(3))))
+		whenCellIsRetrievedAt(Position(Coordinates(Pair(1, 1)), Edge(Cols(3), Rows(3))))
 
 		thenCellHasAdjacentPositions(8)
 	}
@@ -54,7 +54,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrievedAt(Position(2, 2, Edge(Cols(3), Rows(3))))
+		whenCellIsRetrievedAt(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 
 		thenCellHasAdjacentPositions(3)
 	}
@@ -68,7 +68,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrievedAt(Position(0, 2, Edge(Cols(3), Rows(3))))
+		whenCellIsRetrievedAt(Position(Coordinates(Pair(0, 2)), Edge(Cols(3), Rows(3))))
 
 		thenCellHasAdjacentPositions(3)
 	}
@@ -82,7 +82,7 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrievedAt(Position(1, 0, Edge(Cols(3), Rows(3))))
+		whenCellIsRetrievedAt(Position(Coordinates(Pair(1, 0)), Edge(Cols(3), Rows(3))))
 
 		thenCellHasAdjacentPositions(5)
 	}

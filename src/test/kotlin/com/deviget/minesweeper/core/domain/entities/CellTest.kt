@@ -17,7 +17,7 @@ class CellTest {
 	fun `cell with no adjacent mines is revealed`() {
 
 		givenMinerWithPositions(
-				setOf(Position(2, 2, Edge(Cols(3), Rows(3))))
+				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 		)
 		givenMinedBoard(
 				Rows(3),
@@ -37,7 +37,7 @@ class CellTest {
 	fun `cell with mine is revealed`() {
 
 		givenMinerWithPositions(
-				setOf(Position(2, 2, Edge(Cols(3), Rows(3))))
+				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 		)
 		givenMinedBoard(
 				Rows(3),
@@ -57,7 +57,7 @@ class CellTest {
 	fun `cell value matches with one adjacent mine`() {
 
 		givenMinerWithPositions(
-				setOf(Position(2, 2, Edge(Cols(3), Rows(3))))
+				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 		)
 		givenMinedBoard(
 				rows = Rows(3),
@@ -77,9 +77,9 @@ class CellTest {
 
 		givenMinerWithPositions(
 				setOf(
-						Position(0, 0, Edge(Cols(3), Rows(3))),
-						Position(2, 0, Edge(Cols(3), Rows(3))),
-						Position(2, 2, Edge(Cols(3), Rows(3)))
+						Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))),
+						Position(Coordinates(Pair(2, 0)), Edge(Cols(3), Rows(3))),
+						Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3)))
 				)
 		)
 		givenMinedBoard(
@@ -105,11 +105,11 @@ class CellTest {
 	}
 
 	private fun givenCellWithNoAdjacentMines() {
-		cell = board.getCell(Position(0, 0, Edge(Cols(3), Rows(3))))!!
+		cell = board.getCell(Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))))!!
 	}
 
 	private fun givenMinedCell() {
-		cell = board.getCell(Position(2, 2, Edge(Cols(3), Rows(3))))!!
+		cell = board.getCell(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))!!
 	}
 
 	private fun whenCellIsRevealed() {
@@ -117,7 +117,7 @@ class CellTest {
 	}
 
 	private fun whenRetrievingCellWithAdjacentMines() {
-		cell = board.getCell(Position(1, 1, Edge(Cols(3), Rows(3))))!!
+		cell = board.getCell(Position(Coordinates(Pair(1, 1)), Edge(Cols(3), Rows(3))))!!
 	}
 
 	private fun thenAdjacentCellsAreRevealed() {

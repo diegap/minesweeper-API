@@ -1,12 +1,14 @@
 package com.deviget.minesweeper.core.domain.entities
 
-data class Coordinates(val rawValue: Pair<Int, Int>)
+data class Coordinates(val value: Pair<Int, Int>)
 
 data class Position(
-		val x: Int,
-		val y: Int,
+		private val coordinates: Coordinates,
 		private val edge: Edge
 ) {
+	val x get() = coordinates.value.first
+	val y get() = coordinates.value.second
+
 	init {
 		require(x >= 0) {
 			"x must be equal or greater than 0 "
@@ -36,56 +38,56 @@ data class Position(
 
 	private val upperLeft
 		get(): Position? = try {
-			Position(x - 1, y - 1, edge)
+			Position(Coordinates(Pair(x - 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val upper
 		get(): Position? = try {
-			Position(x, y - 1, edge)
+			Position(Coordinates(Pair(x, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val upperRight
 		get() : Position? = try {
-			Position(x + 1, y - 1, edge)
+			Position(Coordinates(Pair(x + 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val left
 		get() : Position? = try {
-			Position(x - 1, y, edge)
+			Position(Coordinates(Pair(x - 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val right
 		get(): Position? = try {
-			Position(x + 1, y, edge)
+			Position(Coordinates(Pair(x + 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val lowerLeft
 		get(): Position? = try {
-			Position(x - 1, y + 1, edge)
+			Position(Coordinates(Pair(x - 1, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val lower
 		get(): Position? = try {
-			Position(x, y + 1, edge)
+			Position(Coordinates(Pair(x, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
 	private val lowerRight
 		get(): Position? = try {
-			Position(x + 1, y + 1, edge)
+			Position(Coordinates(Pair(x + 1, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}

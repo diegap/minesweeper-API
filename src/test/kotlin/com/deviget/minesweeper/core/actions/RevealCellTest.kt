@@ -67,7 +67,7 @@ class RevealCellTest {
 	}
 
 	private fun thenCellIsRevealed() {
-		val cell = returnedBoard.getCell(Position(2, 2, returnedBoard.edge))!!
+		val cell = returnedBoard.getCell(Position(Coordinates(Pair(2, 2)), returnedBoard.edge))!!
 		cell.isVisible() `should be` true
 	}
 

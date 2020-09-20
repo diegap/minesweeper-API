@@ -11,7 +11,7 @@ class RevealCell(
 ) {
 	operator fun invoke(boardId: BoardId, coordinates: Coordinates): Board? {
 		return boardRepository.find(boardId)?.let {
-			it.reveal(Position(coordinates.rawValue.first, coordinates.rawValue.second, it.edge))
+			it.reveal(Position(coordinates, it.edge))
 			return@invoke it
 		}
 	}

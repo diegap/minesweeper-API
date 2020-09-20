@@ -14,11 +14,7 @@ class DefaultBoardFactory(
 		return mutableMapOf<Position, Cell>().apply {
 			repeat(rows.value) { row ->
 				repeat(cols.value) { col ->
-					val position = Position(
-							x = col,
-							y = row,
-							edge = edge
-					)
+					val position = Position(Coordinates(Pair(col, row)), edge)
 					put(position, Cell(
 							position = position,
 							cellValue = getCellValue(position, minedPositions)
