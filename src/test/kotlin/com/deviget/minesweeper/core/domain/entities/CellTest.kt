@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.exceptions.GameOverException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -32,8 +33,28 @@ class CellTest {
 
 	}
 
+	@Test(expected = GameOverException::class)
+	fun `cell with mine is revealed`() {
+
+		givenMinerWithPositions(
+				setOf(Position(2, 2, Edge(Cols(3), Rows(3))))
+		)
+		givenMinedBoard(
+				Rows(3),
+				Cols(3),
+				Mines(1),
+				User(UserName("user1"))
+		)
+		givenMinedCell()
+
+		whenCellIsRevealed()
+
+		// exception is thrown
+
+	}
+
 	@Test
-	fun `cell with one adjacent mine is revealed`() {
+	fun `cell value matches with one adjacent mine`() {
 
 		givenMinerWithPositions(
 				setOf(Position(2, 2, Edge(Cols(3), Rows(3))))
@@ -51,6 +72,29 @@ class CellTest {
 
 	}
 
+	@Test
+	fun `cell value matches with three adjacent mine`() {
+
+		givenMinerWithPositions(
+				setOf(
+						Position(0, 0, Edge(Cols(3), Rows(3))),
+						Position(2, 0, Edge(Cols(3), Rows(3))),
+						Position(2, 2, Edge(Cols(3), Rows(3)))
+				)
+		)
+		givenMinedBoard(
+				rows = Rows(3),
+				cols = Cols(3),
+				mines = Mines(3),
+				user = User(UserName("user1"))
+		)
+
+		whenRetrievingCellWithAdjacentMines()
+
+		thenCellValueIs(3)
+
+	}
+
 	private fun givenMinerWithPositions(positionsToMine: Set<Position>) {
 		miner = mock()
 		whenever(miner.getMinedPositions(any(), any(), any())).thenReturn(positionsToMine)
@@ -62,6 +106,10 @@ class CellTest {
 
 	private fun givenCellWithNoAdjacentMines() {
 		cell = board.getCell(Position(0, 0, Edge(Cols(3), Rows(3))))!!
+	}
+
+	private fun givenMinedCell() {
+		cell = board.getCell(Position(2, 2, Edge(Cols(3), Rows(3))))!!
 	}
 
 	private fun whenCellIsRevealed() {

@@ -8,13 +8,7 @@ enum class CellVisibility {
 	VISIBLE
 }
 
-data class CellValue(val value: Int) {
-	init {
-		require(value >= 0) {
-			"Cell value must be equal or greater than 0"
-		}
-	}
-}
+data class CellValue(val value: Int)
 
 class Cell(
 		val position: Position,

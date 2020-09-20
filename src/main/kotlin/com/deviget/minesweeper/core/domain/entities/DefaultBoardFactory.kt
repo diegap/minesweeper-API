@@ -20,15 +20,20 @@ class DefaultBoardFactory(
 					)
 					put(position, Cell(
 							position = position,
-							cellValue = CellValue(
-									position.adjacentPositions.intersect(minedPositions).size
-							)
+							cellValue = getCellValue(position, minedPositions)
 					))
 				}
 			}
 		}.run {
 			Board(this, user, minedPositions)
 		}
+	}
+
+	private fun getCellValue(position: Position, minedPositions: Set<Position>): CellValue {
+		val rawValue =
+				if (minedPositions.contains(position)) -1
+				else position.adjacentPositions.intersect(minedPositions).size
+		return CellValue(rawValue)
 	}
 
 }
