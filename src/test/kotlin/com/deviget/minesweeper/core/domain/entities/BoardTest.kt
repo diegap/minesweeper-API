@@ -19,9 +19,9 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(0, 0, Edge(3, 3)))
+		whenCellIsRetrievedAt(Position(0, 0, Edge(Cols(3), Rows(3))))
 
-		thenCellHasAdjacents(3)
+		thenCellHasAdjacentPositions(3)
 	}
 
 	@Test
@@ -33,9 +33,9 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(1, 1, Edge(3, 3)))
+		whenCellIsRetrievedAt(Position(1, 1, Edge(Cols(3), Rows(3))))
 
-		thenCellHasAdjacents(8)
+		thenCellHasAdjacentPositions(8)
 	}
 
 	@Test
@@ -47,21 +47,49 @@ class BoardTest {
 				User(UserName("user1"))
 		)
 
-		whenCellIsRetrivedAt(Position(2, 2, Edge(3, 3)))
+		whenCellIsRetrievedAt(Position(2, 2, Edge(Cols(3), Rows(3))))
 
-		thenCellHasAdjacents(3)
+		thenCellHasAdjacentPositions(3)
+	}
+
+	@Test
+	fun `Retrieve adjacent cells at (0,2) on a 3x3 board`() {
+		givenBoard(
+				Rows(3),
+				Cols(3),
+				Mines(1),
+				User(UserName("user1"))
+		)
+
+		whenCellIsRetrievedAt(Position(0, 2, Edge(Cols(3), Rows(3))))
+
+		thenCellHasAdjacentPositions(3)
+	}
+
+	@Test
+	fun `Retrieve adjacent cells at (1,0) on a 3x3 board`() {
+		givenBoard(
+				Rows(3),
+				Cols(3),
+				Mines(1),
+				User(UserName("user1"))
+		)
+
+		whenCellIsRetrievedAt(Position(1, 0, Edge(Cols(3), Rows(3))))
+
+		thenCellHasAdjacentPositions(5)
 	}
 
 	private fun givenBoard(rows: Rows, cols: Cols, mines: Mines, user: User) {
 		board = boardFactory.createBoard(rows, cols, mines, user)
 	}
 
-	private fun whenCellIsRetrivedAt(position: Position) {
+	private fun whenCellIsRetrievedAt(position: Position) {
 		cell = board.getCell(position)!!
 	}
 
 
-	private fun thenCellHasAdjacents(size: Int) {
+	private fun thenCellHasAdjacentPositions(size: Int) {
 		cell.adjacentPositions shouldNotBe emptySet()
 		cell.adjacentPositions.size shouldBeEqualTo size
 	}
