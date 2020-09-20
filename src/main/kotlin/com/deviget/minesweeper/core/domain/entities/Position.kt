@@ -1,6 +1,10 @@
 package com.deviget.minesweeper.core.domain.entities
 
-data class Position(val x: Int, val y: Int, private val edge: Edge) {
+data class Position(
+		val x: Int,
+		val y: Int,
+		private val edge: Edge
+) {
 	init {
 		require(x >= 0) {
 			"x must be equal or greater than 0 "
