@@ -3,7 +3,7 @@ package com.deviget.minesweeper.core.domain.entities
 class Board(
 		val cellsByPosition: Map<Position, Cell>,
 		val user: User,
-		private val minedPositions: MutableSet<Position> = mutableSetOf()
+		private val minedPositions: Set<Position> = mutableSetOf()
 ) {
 	fun getCell(position: Position): Cell? = cellsByPosition[position]
 

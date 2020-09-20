@@ -8,27 +8,28 @@ class DefaultBoardFactory(
 		private val miner: MinerRandomizer
 ) : BoardFactory {
 
-	override fun createBoard(rows: Rows, cols: Cols, mines: Mines, user: User) =
-			mutableMapOf<Position, Cell>().apply {
-				val minedPositions = miner.getMinedPositions(rows, cols, mines)
-				repeat(rows.value) { row ->
-					repeat(cols.value) { col ->
-						val position = Position(
-								x = col,
-								y = row,
-								edge = Edge(cols, rows)
-						)
-						put(position, Cell(
-								position = position,
-								cellValue = CellValue(
-										position.adjacentPositions.intersect(minedPositions).size
-								)
-						))
-					}
+	override fun createBoard(rows: Rows, cols: Cols, mines: Mines, user: User): Board {
+		val minedPositions = miner.getMinedPositions(rows, cols, mines)
+		return mutableMapOf<Position, Cell>().apply {
+			repeat(rows.value) { row ->
+				repeat(cols.value) { col ->
+					val position = Position(
+							x = col,
+							y = row,
+							edge = Edge(cols, rows)
+					)
+					put(position, Cell(
+							position = position,
+							cellValue = CellValue(
+									position.adjacentPositions.intersect(minedPositions).size
+							)
+					))
 				}
-			}.run {
-				Board(this, user)
 			}
+		}.run {
+			Board(this, user, minedPositions)
+		}
+	}
 
 }
 
