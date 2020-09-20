@@ -1,5 +1,7 @@
 package com.deviget.minesweeper.core.domain.entities
 
+data class Coordinates(val rawValue: Pair<Int, Int>)
+
 data class Position(
 		val x: Int,
 		val y: Int,

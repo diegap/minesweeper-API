@@ -10,13 +10,14 @@ class DefaultBoardFactory(
 
 	override fun createBoard(rows: Rows, cols: Cols, mines: Mines, user: User): Board {
 		val minedPositions = miner.getMinedPositions(rows, cols, mines)
+		val edge = Edge(cols, rows)
 		return mutableMapOf<Position, Cell>().apply {
 			repeat(rows.value) { row ->
 				repeat(cols.value) { col ->
 					val position = Position(
 							x = col,
 							y = row,
-							edge = Edge(cols, rows)
+							edge = edge
 					)
 					put(position, Cell(
 							position = position,
@@ -25,7 +26,7 @@ class DefaultBoardFactory(
 				}
 			}
 		}.run {
-			Board(this, user, minedPositions)
+			Board(this, user, minedPositions, edge)
 		}
 	}
 
