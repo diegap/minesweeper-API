@@ -5,11 +5,14 @@ import com.deviget.minesweeper.core.domain.entities.BoardId
 import com.deviget.minesweeper.core.domain.entities.Cols
 import com.deviget.minesweeper.core.domain.entities.Coordinates
 import com.deviget.minesweeper.core.domain.entities.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.Edge
+import com.deviget.minesweeper.core.domain.entities.MinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.Mines
 import com.deviget.minesweeper.core.domain.entities.Position
 import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.exceptions.GameOverException
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -22,17 +25,25 @@ import java.util.UUID
 
 class RevealCellTest {
 
-	private val boardId = BoardId(UUID.randomUUID())
-
 	private lateinit var returnedBoard: Board
 	private lateinit var boardRepository: BoardRepository
+
 	private lateinit var action: RevealCell
 	private lateinit var board: Board
+	private lateinit var miner: MinerRandomizer
+
+	private val boardId = BoardId(UUID.randomUUID())
 
 	@Test
-	fun `retrieve cell by position`() {
+	fun `reveal basic cell by position`() {
 
-		givenBoard(boardId, User(UserName("user1")))
+		givenBoard(
+				Rows(3),
+				Cols(3),
+				Mines(1),
+				User(UserName("user1")),
+				mock()
+		)
 		givenBoardRepository(boardId)
 		givenRevealCellAction()
 
@@ -45,8 +56,37 @@ class RevealCellTest {
 
 	}
 
-	private fun givenBoard(boardId: BoardId, user: User) {
-		board = DefaultBoardFactory(mock()).createBoard(Rows(3), Cols(3), Mines(1), user)
+	@Test(expected = GameOverException::class)
+	fun `reveal mined cell by position`() {
+
+		givenMinerReturningMinesAt(
+				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
+		)
+		givenBoard(
+				Rows(3),
+				Cols(3),
+				Mines(1),
+				User(UserName("user1")),
+				miner
+		)
+		givenBoardRepository(boardId)
+		givenRevealCellAction()
+
+		whenRevealCellisInvoked(
+				boardId,
+				Coordinates(Pair(2, 2)))
+
+		thenBoardIsRetrieved()
+
+	}
+
+	private fun givenMinerReturningMinesAt(positions: Set<Position>) {
+		miner = mock()
+		whenever(miner.getMinedPositions(any(), any(), any())).thenReturn(positions)
+	}
+
+	private fun givenBoard(rows: Rows, cols: Cols, mines: Mines, user: User, miner: MinerRandomizer) {
+		board = DefaultBoardFactory(miner).createBoard(rows, cols, mines, user)
 	}
 
 	private fun givenBoardRepository(boardId: BoardId) {

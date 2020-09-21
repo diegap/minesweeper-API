@@ -1,6 +1,5 @@
 package com.deviget.minesweeper.core.domain.entities
 
-import com.deviget.minesweeper.core.domain.exceptions.GameOverException
 import java.util.UUID
 
 data class BoardId(val value: UUID)
@@ -14,8 +13,6 @@ class Board(
 	fun getCell(position: Position): Cell? = cellsByPosition[position]
 
 	fun reveal(position: Position) {
-		checkPosition(position)
-
 		return with(cellsByPosition[position]) {
 			this?.reveal()
 			if (!position.isSurroundedByMines()) {
@@ -29,11 +26,6 @@ class Board(
 		}
 	}
 
-	private fun checkPosition(position: Position) {
-		if (position.isMined()) throw GameOverException()
-	}
-
-	private fun Position.isMined() = minedPositions.contains(this)
 	private fun Position.isSurroundedByMines() =
 			adjacentPositions.intersect(minedPositions).isNotEmpty()
 }
