@@ -1,17 +1,27 @@
 package com.deviget.minesweeper.core.domain.entities
 
 import com.deviget.minesweeper.core.domain.exceptions.GameOverException
+import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.amshove.kluent.shouldBeEqualTo
+import org.junit.Before
 import org.junit.Test
+import java.util.UUID
 
 class CellTest {
 
 	private lateinit var miner: MinerRandomizer
 	private lateinit var cell: Cell
 	private lateinit var board: Board
+	private lateinit var boardIdRepository: BoardIdRepository
+
+	@Before
+	fun init() {
+		boardIdRepository = mock()
+		whenever(boardIdRepository.getNextId()).thenReturn(BoardId(UUID.randomUUID()))
+	}
 
 	@Test
 	fun `cell with no adjacent mines is revealed`() {
@@ -100,7 +110,7 @@ class CellTest {
 	}
 
 	private fun givenMinedBoard(rows: Rows, cols: Cols, mines: Mines, user: User) {
-		board = DefaultBoardFactory(miner).createBoard(rows, cols, mines, user)
+		board = DefaultBoardFactory(miner, boardIdRepository).createBoard(rows, cols, mines, user)
 	}
 
 	private fun givenCellWithNoAdjacentMines() {

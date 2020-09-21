@@ -13,6 +13,7 @@ import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.exceptions.GameOverException
+import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -27,6 +28,7 @@ class RevealCellTest {
 
 	private lateinit var returnedBoard: Board
 	private lateinit var boardRepository: BoardRepository
+	private lateinit var boardIdRepository: BoardIdRepository
 
 	private lateinit var action: RevealCell
 	private lateinit var board: Board
@@ -37,6 +39,7 @@ class RevealCellTest {
 	@Test
 	fun `reveal basic cell by position`() {
 
+		givenBoardIdRepository()
 		givenBoard(
 				Rows(3),
 				Cols(3),
@@ -62,6 +65,7 @@ class RevealCellTest {
 		givenMinerReturningMinesAt(
 				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 		)
+		givenBoardIdRepository()
 		givenBoard(
 				Rows(3),
 				Cols(3),
@@ -86,7 +90,12 @@ class RevealCellTest {
 	}
 
 	private fun givenBoard(rows: Rows, cols: Cols, mines: Mines, user: User, miner: MinerRandomizer) {
-		board = DefaultBoardFactory(miner).createBoard(rows, cols, mines, user)
+		board = DefaultBoardFactory(miner, boardIdRepository).createBoard(rows, cols, mines, user)
+	}
+
+	private fun givenBoardIdRepository() {
+		boardIdRepository = mock()
+		whenever(boardIdRepository.getNextId()).thenReturn(boardId)
 	}
 
 	private fun givenBoardRepository(boardId: BoardId) {

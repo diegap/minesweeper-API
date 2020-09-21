@@ -11,6 +11,7 @@ import com.deviget.minesweeper.core.domain.entities.Position
 import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atMost
@@ -23,6 +24,7 @@ import java.util.UUID
 
 class FlagCellTest {
 
+	private lateinit var boardIdRepository: BoardIdRepository
 	private lateinit var returnedBoard: Board
 	private lateinit var action: FlagCell
 	private lateinit var boardRepository: BoardRepository
@@ -30,6 +32,7 @@ class FlagCellTest {
 
 	@Test
 	fun `flag a cell`() {
+		givenBoardIdRepository()
 		givenBoardRepository(
 				BoardId(uuid),
 				Rows(3),
@@ -45,8 +48,13 @@ class FlagCellTest {
 
 	}
 
+	private fun givenBoardIdRepository() {
+		boardIdRepository = mock()
+		whenever(boardIdRepository.getNextId()).thenReturn(BoardId(uuid))
+	}
+
 	private fun givenBoardRepository(boardId: BoardId, rows: Rows, cols: Cols, mines: Mines, user: User) {
-		val board = DefaultBoardFactory(mock()).createBoard(rows, cols, mines, user)
+		val board = DefaultBoardFactory(mock(), boardIdRepository).createBoard(rows, cols, mines, user)
 		boardRepository = mock()
 		whenever(boardRepository.find(boardId)).thenReturn(board)
 	}

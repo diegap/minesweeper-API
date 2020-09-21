@@ -1,13 +1,26 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import org.amshove.kluent.shouldBeEqualTo
+import org.junit.Before
 import org.junit.Test
+import java.util.UUID
 
 class BoardFactoryTest {
 
+	private lateinit var miner: MinerRandomizer
 	private lateinit var board: Board
 	private lateinit var boardFactory: BoardFactory
+	private lateinit var boardIdRepository: BoardIdRepository
+
+	@Before
+	fun init() {
+		miner = mock()
+		boardIdRepository = mock()
+		whenever(boardIdRepository.getNextId()).thenReturn(BoardId(UUID.randomUUID()))
+	}
 
 	@Test
 	fun `Create a 3x3 board`() {
@@ -66,8 +79,7 @@ class BoardFactoryTest {
 	}
 
 	private fun givenBoardFactory() {
-		val miner: MinerRandomizer = mock()
-		boardFactory = DefaultBoardFactory(miner)
+		boardFactory = DefaultBoardFactory(miner, boardIdRepository)
 	}
 
 	private fun whenFactoryIsInvokedWith(rows: Rows, cols: Cols, mines: Mines, user: User) {
@@ -77,6 +89,5 @@ class BoardFactoryTest {
 	private fun thenBoardIsCreatedWithCellsSize(cellsSize: Int) {
 		board.cellsByPosition.size shouldBeEqualTo cellsSize
 	}
-
 
 }

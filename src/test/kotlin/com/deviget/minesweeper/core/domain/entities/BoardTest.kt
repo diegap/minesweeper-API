@@ -1,10 +1,13 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.Before
 import org.junit.Test
+import java.util.UUID
 
 class BoardTest {
 
@@ -14,7 +17,9 @@ class BoardTest {
 
 	@Before
 	fun init() {
-		boardFactory = DefaultBoardFactory(mock())
+		val boardIdRepository: BoardIdRepository = mock()
+		whenever(boardIdRepository.getNextId()).thenReturn(BoardId(UUID.randomUUID()))
+		boardFactory = DefaultBoardFactory(mock(), boardIdRepository)
 	}
 
 	@Test

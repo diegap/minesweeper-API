@@ -5,6 +5,7 @@ import java.util.UUID
 data class BoardId(val value: UUID)
 
 class Board(
+		val id: BoardId,
 		val cellsByPosition: MutableMap<Position, Cell>,
 		val user: User,
 		private val minedPositions: Set<Position> = mutableSetOf(),
