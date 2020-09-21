@@ -35,7 +35,6 @@ class CellTest {
 
 	@Test(expected = GameOverException::class)
 	fun `cell with mine is revealed`() {
-
 		givenMinerWithPositions(
 				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
 		)
@@ -113,7 +112,7 @@ class CellTest {
 	}
 
 	private fun whenCellIsRevealed() {
-		board.reveal(cell.position)
+		board.reveal(cell.getPosition())
 	}
 
 	private fun whenRetrievingCellWithAdjacentMines() {
@@ -122,14 +121,13 @@ class CellTest {
 
 	private fun thenAdjacentCellsAreRevealed() {
 		cell.isVisible() shouldBeEqualTo true
-		cell.adjacentPositions.forEach {
+		cell.getPosition().adjacentPositions.forEach {
 			board.getCell(it)!!.isVisible() shouldBeEqualTo true
 		}
 	}
 
 	private fun thenCellValueIs(value: Int) {
-		cell.value shouldBeEqualTo value
+		cell.reveal() shouldBeEqualTo value
 	}
-
 
 }

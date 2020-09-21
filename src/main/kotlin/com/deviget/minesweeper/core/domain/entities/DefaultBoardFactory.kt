@@ -15,16 +15,21 @@ class DefaultBoardFactory(
 			repeat(rows.value) { row ->
 				repeat(cols.value) { col ->
 					val position = Position(Coordinates(Pair(col, row)), edge)
-					put(position, Cell(
-							position = position,
-							cellValue = getCellValue(position, minedPositions)
-					))
+					put(position, getCell(position, minedPositions))
 				}
 			}
 		}.run {
 			Board(this, user, minedPositions, edge)
 		}
 	}
+
+	private fun getCell(position: Position, minedPositions: Set<Position>) =
+			with(BasicCell(position, getCellValue(position, minedPositions))) {
+				when {
+					minedPositions.contains(position) -> MinedCell(this)
+					else -> this
+				}
+			}
 
 	private fun getCellValue(position: Position, minedPositions: Set<Position>): CellValue {
 		val rawValue =

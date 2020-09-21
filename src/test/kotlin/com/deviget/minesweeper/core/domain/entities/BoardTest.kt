@@ -97,8 +97,8 @@ class BoardTest {
 
 
 	private fun thenCellHasAdjacentPositions(size: Int) {
-		cell.adjacentPositions shouldNotBe emptySet()
-		cell.adjacentPositions.size shouldBeEqualTo size
+		cell.getPosition().adjacentPositions shouldNotBe emptySet()
+		cell.getPosition().adjacentPositions.size shouldBeEqualTo size
 	}
 
 }
