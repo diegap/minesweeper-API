@@ -19,6 +19,12 @@ class Board(
 		}
 	}
 
+	fun questionMarkCell(position: Position) {
+		cellsByPosition[position]?.let {
+			cellsByPosition[position] = QuestionMarkedCell(it)
+		}
+	}
+
 	fun reveal(position: Position) {
 		cellsByPosition[position]?.let {
 			it.reveal()
