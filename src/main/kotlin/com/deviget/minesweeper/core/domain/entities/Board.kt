@@ -34,15 +34,17 @@ class Board(
 
 	private fun safeReveal(positions: Set<Position>) {
 		if (positions.touchAnyMine()) return
-		positions.forEach {
-			cellsByPosition[it]?.reveal()
-			it.marked = true
+		positions.forEach { position ->
+			cellsByPosition[position]?.reveal()
 			safeReveal(
-					it.adjacentPositions.filter(Position::marked).toSet()
+					position.adjacentPositions
+							.filter { it.isHidden() }
+							.toSet()
 			)
 		}
 	}
 
+	private fun Position.isHidden() = cellsByPosition[this]?.isVisible()?.not() ?: true
 	private fun Set<Position>.touchAnyMine() =
 			this.intersect(minedPositions).isNotEmpty()
 }

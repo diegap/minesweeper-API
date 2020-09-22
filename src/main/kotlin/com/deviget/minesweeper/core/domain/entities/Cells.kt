@@ -57,8 +57,6 @@ class BasicCell(
 		private var visibility: CellVisibility = HIDDEN
 ) : Cell {
 
-	val adjacentPositions get() = position.adjacentPositions
-
 	override fun reveal(): Int {
 		visibility = VISIBLE
 		return cellValue.value

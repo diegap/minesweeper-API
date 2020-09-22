@@ -9,9 +9,6 @@ data class Position(
 	val x get() = coordinates.value.first
 	val y get() = coordinates.value.second
 
-	@Transient
-	var marked = false
-
 	init {
 		require(x >= 0) {
 			"x must be equal or greater than 0 "
