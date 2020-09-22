@@ -39,56 +39,56 @@ data class Position(
 			add(lowerRight)
 		}.filterNotNull().toSet()
 
-	val upperLeft
+	private val upperLeft
 		get(): Position? = try {
 			Position(Coordinates(Pair(x - 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val upper
+	private val upper
 		get(): Position? = try {
 			Position(Coordinates(Pair(x, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val upperRight
+	private val upperRight
 		get() : Position? = try {
 			Position(Coordinates(Pair(x + 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val left
+	private val left
 		get() : Position? = try {
 			Position(Coordinates(Pair(x - 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val right
+	private val right
 		get(): Position? = try {
 			Position(Coordinates(Pair(x + 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val lowerLeft
+	private val lowerLeft
 		get(): Position? = try {
 			Position(Coordinates(Pair(x - 1, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val lower
+	private val lower
 		get(): Position? = try {
 			Position(Coordinates(Pair(x, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	val lowerRight
+	private val lowerRight
 		get(): Position? = try {
 			Position(Coordinates(Pair(x + 1, y + 1)), edge)
 		} catch (exception: Exception) {

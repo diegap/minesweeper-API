@@ -37,10 +37,6 @@ class Board(
 		}
 	}
 
-
-	private fun Position.touchAnyMine() =
-			adjacentPositions.intersect(minedPositions).isNotEmpty()
-
 	private fun Set<Position>.touchAnyMine() =
 			this.intersect(minedPositions).isNotEmpty()
 }
