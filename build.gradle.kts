@@ -7,7 +7,8 @@
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.3.70"
-
+    id("org.springframework.boot") version ("2.2.1.RELEASE")
+    id("io.spring.dependency-management") version ("1.0.8.RELEASE")
     // Apply the application plugin to add support for building a CLI application.
     application
 }
@@ -24,6 +25,10 @@ dependencies {
 
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
