@@ -9,6 +9,9 @@ data class Position(
 	val x get() = coordinates.value.first
 	val y get() = coordinates.value.second
 
+	@Transient
+	var marked = false
+
 	init {
 		require(x >= 0) {
 			"x must be equal or greater than 0 "
@@ -36,56 +39,56 @@ data class Position(
 			add(lowerRight)
 		}.filterNotNull().toSet()
 
-	private val upperLeft
+	val upperLeft
 		get(): Position? = try {
 			Position(Coordinates(Pair(x - 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val upper
+	val upper
 		get(): Position? = try {
 			Position(Coordinates(Pair(x, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val upperRight
+	val upperRight
 		get() : Position? = try {
 			Position(Coordinates(Pair(x + 1, y - 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val left
+	val left
 		get() : Position? = try {
 			Position(Coordinates(Pair(x - 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val right
+	val right
 		get(): Position? = try {
 			Position(Coordinates(Pair(x + 1, y)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val lowerLeft
+	val lowerLeft
 		get(): Position? = try {
 			Position(Coordinates(Pair(x - 1, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val lower
+	val lower
 		get(): Position? = try {
 			Position(Coordinates(Pair(x, y + 1)), edge)
 		} catch (exception: Exception) {
 			null
 		}
 
-	private val lowerRight
+	val lowerRight
 		get(): Position? = try {
 			Position(Coordinates(Pair(x + 1, y + 1)), edge)
 		} catch (exception: Exception) {

@@ -39,13 +39,16 @@ class RevealCellTest {
 	@Test
 	fun `reveal basic cell by position`() {
 
+		givenMinerReturningMinesAt(
+				setOf(Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))))
+		)
 		givenBoardIdRepository()
 		givenBoard(
 				Rows(3),
 				Cols(3),
 				Mines(1),
 				User(UserName("user1")),
-				mock()
+				miner
 		)
 		givenBoardRepository(boardId)
 		givenRevealCellAction()

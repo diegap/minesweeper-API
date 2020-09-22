@@ -20,19 +20,27 @@ class Board(
 	}
 
 	fun reveal(position: Position) {
-		return with(cellsByPosition[position]) {
-			this?.reveal()
-			if (!position.isSurroundedByMines()) {
-				position.adjacentPositions
-						.map(::getCell)
-						.forEach {
-							it?.reveal()
-							// TODO check for recursive call
-						}
-			}
+		cellsByPosition[position]?.let {
+			it.reveal()
+			safeReveal(position.adjacentPositions)
 		}
 	}
 
-	private fun Position.isSurroundedByMines() =
+	private fun safeReveal(positions: Set<Position>) {
+		if (positions.touchAnyMine()) return
+		positions.forEach {
+			cellsByPosition[it]?.reveal()
+			it.marked = true
+			safeReveal(
+					it.adjacentPositions.filter(Position::marked).toSet()
+			)
+		}
+	}
+
+
+	private fun Position.touchAnyMine() =
 			adjacentPositions.intersect(minedPositions).isNotEmpty()
+
+	private fun Set<Position>.touchAnyMine() =
+			this.intersect(minedPositions).isNotEmpty()
 }
