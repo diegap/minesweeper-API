@@ -48,7 +48,7 @@ class StartGameTest {
 	}
 
 	private fun whenActionIsInvokedWith(rows: Rows, cols: Cols, mines: Mines, user: User) {
-		startGame(rows, cols, mines, user)
+		startGame(StartGame.ActionData(rows, cols, mines, user))
 	}
 
 	private fun thenBoardIsCreated() {
