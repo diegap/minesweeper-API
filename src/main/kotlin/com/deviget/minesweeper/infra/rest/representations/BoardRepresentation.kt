@@ -6,12 +6,13 @@ import com.deviget.minesweeper.core.domain.entities.Mines
 import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.fasterxml.jackson.annotation.JsonProperty
 
 data class BoardRepresentation(
-		val user: UserRepresentation,
-		val rows: Int,
-		val cols: Int,
-		val mines: Int
+		@JsonProperty val user: UserRepresentation,
+		@JsonProperty val rows: Int,
+		@JsonProperty val cols: Int,
+		@JsonProperty val mines: Int
 ) {
 	fun toActionData() =
 			StartGame.ActionData(
