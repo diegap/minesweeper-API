@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.exceptions.GameOverSuccessException
 import java.util.UUID
 
 data class BoardId(val value: UUID)
@@ -29,6 +30,7 @@ class Board(
 		cellsByPosition[position]?.let {
 			it.reveal()
 			safeReveal(position.adjacentPositions)
+			checkRevealedCells()
 		}
 	}
 
@@ -42,6 +44,12 @@ class Board(
 							.toSet()
 			)
 		}
+	}
+
+	private fun checkRevealedCells() {
+		val (_, safePositions) = cellsByPosition.keys.partition { it in minedPositions }
+		if (safePositions.size == safePositions.map { cellsByPosition[it] }.filter { it?.isVisible() == true }.size)
+			throw GameOverSuccessException()
 	}
 
 	private fun Position.isHidden() = cellsByPosition[this]?.isVisible()?.not() ?: true

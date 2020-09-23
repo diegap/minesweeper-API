@@ -27,7 +27,10 @@ class CellTest {
 	fun `cell with no adjacent mines is revealed`() {
 
 		givenMinerWithPositions(
-				setOf(Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))))
+				setOf(
+						Position(Coordinates(Pair(2, 2)), Edge(Cols(3), Rows(3))),
+						Position(Coordinates(Pair(2, 1)), Edge(Cols(3), Rows(3)))
+				)
 		)
 		givenMinedBoard(
 				Rows(3),

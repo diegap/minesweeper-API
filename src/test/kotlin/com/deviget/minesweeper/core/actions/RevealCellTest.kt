@@ -40,7 +40,10 @@ class RevealCellTest {
 	fun `reveal basic cell by position`() {
 
 		givenMinerReturningMinesAt(
-				setOf(Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))))
+				setOf(
+						Position(Coordinates(Pair(0, 0)), Edge(Cols(3), Rows(3))),
+						Position(Coordinates(Pair(1, 1)), Edge(Cols(3), Rows(3)))
+				)
 		)
 		givenBoardIdRepository()
 		givenBoard(
