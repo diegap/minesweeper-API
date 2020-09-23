@@ -3,7 +3,7 @@ package com.deviget.minesweeper.infra.config
 import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.DefaultBoardFactory
-import com.deviget.minesweeper.core.domain.entities.DummyMinerRandomizer
+import com.deviget.minesweeper.core.domain.entities.DefaultMinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.MinerRandomizer
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
@@ -22,7 +22,7 @@ open class Injector {
 	open fun boardIdRepository(): BoardIdRepository = InMemoryBoardIdRepository()
 
 	@Bean
-	open fun miner(): MinerRandomizer = DummyMinerRandomizer
+	open fun miner(): MinerRandomizer = DefaultMinerRandomizer
 
 	@Bean
 	open fun boardFactory(
