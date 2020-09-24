@@ -10,9 +10,9 @@ data class RowViewRepresentation(
 )
 
 data class ColViewRepresentation(
-		val x: String,
-		val y: String,
-		val value: String
+		@JsonProperty val x: String,
+		@JsonProperty val y: String,
+		@JsonProperty val value: String
 )
 
 data class BoardViewRepresentation(
