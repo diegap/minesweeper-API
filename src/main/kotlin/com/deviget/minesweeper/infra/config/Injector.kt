@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.infra.config
 
+import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetBoards
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
@@ -43,5 +44,8 @@ open class Injector {
 
 	@Bean
 	open fun getBoards(boardRepository: BoardRepository) = GetBoards(boardRepository)
+
+	@Bean
+	open fun getBoardById(boardRepository: BoardRepository) = GetBoardById(boardRepository)
 
 }

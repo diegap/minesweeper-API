@@ -1,17 +1,14 @@
 package com.deviget.minesweeper.infra.rest.controllers
 
-import com.deviget.minesweeper.core.actions.GetBoards
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.BoardId
 import com.deviget.minesweeper.core.domain.entities.Coordinates
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation
-import com.deviget.minesweeper.infra.rest.representations.BoardResumeRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.PositionRepresentation
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -22,8 +19,7 @@ import java.util.UUID
 @RestController
 class BoardController(
 		private val startGame: StartGame,
-		private val revealCell: RevealCell,
-		private val getBoards: GetBoards
+		private val revealCell: RevealCell
 ) {
 
 	@PostMapping("/users/{user-id}/boards")
@@ -31,16 +27,6 @@ class BoardController(
 		val board = startGame(boardRepresentation.toActionData())
 		return ResponseEntity(BoardViewRepresentation(board), HttpStatus.CREATED)
 	}
-
-	@GetMapping("/admin/boards")
-	fun retrieveBoards() =
-			getBoards()
-					.map(BoardId::value)
-					.map(UUID::toString)
-					.toSet()
-					.run {
-						ResponseEntity(BoardResumeRepresentation(boardIds = this), HttpStatus.OK)
-					}
 
 	@PutMapping("/users/{user-id}/boards/{board-id}")
 	fun revealCell(@PathVariable("board-id") boardId: String,

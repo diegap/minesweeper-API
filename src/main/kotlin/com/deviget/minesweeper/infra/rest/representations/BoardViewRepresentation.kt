@@ -44,3 +44,13 @@ data class BoardViewRepresentation(
 	}
 
 }
+
+data class AdminBoardViewRepresentation(
+		val board: BoardViewRepresentation,
+		val user: UserRepresentation
+) {
+	constructor(board: Board) : this(
+			board = BoardViewRepresentation(board),
+			user = UserRepresentation(board.user)
+	)
+}

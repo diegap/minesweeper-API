@@ -45,7 +45,6 @@ class FlagCellTest {
 		whenActionIsInvoked(BoardId(uuid), Coordinates(Pair(1, 1)))
 
 		thenCellIsFlagged(BoardId(uuid), Coordinates(Pair(1, 1)))
-
 	}
 
 	private fun givenBoardIdRepository() {
