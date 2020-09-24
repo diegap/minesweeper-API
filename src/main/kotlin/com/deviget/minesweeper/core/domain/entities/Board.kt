@@ -1,16 +1,31 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.entities.BoardStatus.FINISHED
+import com.deviget.minesweeper.core.domain.entities.BoardStatus.PAUSED
+import com.deviget.minesweeper.core.domain.entities.BoardStatus.RUNNING
 import com.deviget.minesweeper.core.domain.exceptions.GameOverSuccessException
 import java.util.UUID
+import java.util.concurrent.TimeUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
 
 data class BoardId(val value: UUID)
+
+enum class BoardStatus {
+	RUNNING,
+	PAUSED,
+	FINISHED
+}
 
 class Board(
 		val id: BoardId,
 		val cellsByPosition: MutableMap<Position, Cell>,
 		val user: User,
 		private val minedPositions: Set<Position> = mutableSetOf(),
-		val edge: Edge
+		val edge: Edge,
+		var lastAccess: Long = System.nanoTime(),
+		private val elapsedTime: MutableSet<Long> = mutableSetOf(),
+		var status: BoardStatus = RUNNING
 ) {
 	fun getCell(position: Position): Cell? = cellsByPosition[position]
 
@@ -26,13 +41,36 @@ class Board(
 		}
 	}
 
-	fun reveal(position: Position) {
+	fun reveal(position: Position): Board {
 		cellsByPosition[position]?.let {
 			it.reveal()
 			safeReveal(position.adjacentPositions)
 			checkRevealedCells()
 		}
+		return this
 	}
+
+	fun pause() {
+		with(System.nanoTime()) {
+			elapsedTime.add((this.minus(lastAccess)))
+			lastAccess = this
+			status = PAUSED
+		}
+	}
+
+	fun resume() {
+		lastAccess = System.nanoTime()
+		status = RUNNING
+	}
+
+	fun finish() {
+		lastAccess = System.nanoTime()
+		status = FINISHED
+	}
+
+	@ExperimentalTime
+	val getElapsedTime
+		get() = elapsedTime.sum().toDuration(TimeUnit.SECONDS)
 
 	private fun safeReveal(positions: Set<Position>) {
 		if (positions.touchAnyMine()) return

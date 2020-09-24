@@ -1,3 +1,9 @@
 package com.deviget.minesweeper.core.domain.exceptions
 
-class GameOverException : Exception()
+import com.deviget.minesweeper.core.domain.entities.Board
+
+class GameOverException : VisitableException() {
+	override fun accept(boardFinisher: BoardExceptionVisitor, board: Board): Board {
+		return boardFinisher.visit(this, board)
+	}
+}

@@ -8,6 +8,8 @@ import com.deviget.minesweeper.core.domain.entities.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.DefaultBoardFactory
 import com.deviget.minesweeper.core.domain.entities.DefaultMinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.MinerRandomizer
+import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
+import com.deviget.minesweeper.core.domain.exceptions.BoardFinisher
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryBoardIdRepository
@@ -40,7 +42,13 @@ open class Injector {
 	) = StartGame(boardRepository, boardFactory)
 
 	@Bean
-	open fun revealCell(boardRepository: BoardRepository) = RevealCell(boardRepository)
+	open fun boardFinisher(boardRepository: BoardRepository): BoardExceptionVisitor = BoardFinisher(boardRepository)
+
+	@Bean
+	open fun revealCell(
+			boardRepository: BoardRepository,
+			boardFinisher: BoardExceptionVisitor
+	) = RevealCell(boardRepository, boardFinisher)
 
 	@Bean
 	open fun getBoards(boardRepository: BoardRepository) = GetBoards(boardRepository)

@@ -1,18 +1,23 @@
 package com.deviget.minesweeper.core.actions
 
-import com.deviget.minesweeper.core.domain.entities.Board
 import com.deviget.minesweeper.core.domain.entities.BoardId
 import com.deviget.minesweeper.core.domain.entities.Coordinates
 import com.deviget.minesweeper.core.domain.entities.Position
+import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
+import com.deviget.minesweeper.core.domain.exceptions.VisitableException
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 
 class RevealCell(
-		private val boardRepository: BoardRepository
+		private val boardRepository: BoardRepository,
+		private val boardFinisher: BoardExceptionVisitor
 ) {
-	operator fun invoke(boardId: BoardId, coordinates: Coordinates): Board? {
-		return boardRepository.find(boardId)?.let {
-			it.reveal(Position(coordinates, it.edge))
-			return@invoke it
-		}
-	}
+	operator fun invoke(boardId: BoardId, coordinates: Coordinates) =
+			boardRepository.find(boardId)?.let {
+				try {
+					it.reveal(Position(coordinates, it.edge))
+				} catch (exception: VisitableException) {
+					exception.accept(boardFinisher, it)
+				}
+			}
+
 }

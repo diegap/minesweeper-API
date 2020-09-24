@@ -2,10 +2,6 @@ package com.deviget.minesweeper.core.domain.entities
 
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 
-interface MinerRandomizer {
-	fun getMinedPositions(rows: Rows, cols: Cols, mines: Mines): Set<Position>
-}
-
 class DefaultBoardFactory(
 		private val miner: MinerRandomizer,
 		private val boardIdRepository: BoardIdRepository
