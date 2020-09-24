@@ -4,13 +4,13 @@ import com.deviget.minesweeper.core.domain.entities.Board
 import com.deviget.minesweeper.core.domain.entities.BoardId
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 
-class InMemoryBoardRepository : BoardRepository {
+class InMemoryBoardRepository(
+		private val boards: MutableMap<BoardId, Board> = mutableMapOf()
+) : BoardRepository {
 
 	override fun save(board: Board) {
-		TODO("Not yet implemented")
+		boards[board.id] = board
 	}
 
-	override fun find(boardId: BoardId): Board? {
-		TODO("Not yet implemented")
-	}
+	override fun find(boardId: BoardId) = boards[boardId]
 }

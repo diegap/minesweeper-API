@@ -9,11 +9,13 @@ import com.deviget.minesweeper.core.domain.entities.UserName
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class BoardRepresentation(
+		@JsonProperty val id: String?,
 		@JsonProperty val user: UserRepresentation,
 		@JsonProperty val rows: Int,
 		@JsonProperty val cols: Int,
 		@JsonProperty val mines: Int
 ) {
+
 	fun toActionData() =
 			StartGame.ActionData(
 					Rows(rows),
@@ -21,5 +23,4 @@ data class BoardRepresentation(
 					Mines(mines),
 					User(UserName(user.userName))
 			)
-
 }

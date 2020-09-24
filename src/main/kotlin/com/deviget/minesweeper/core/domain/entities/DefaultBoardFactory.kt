@@ -38,7 +38,7 @@ class DefaultBoardFactory(
 		val rawValue =
 				if (minedPositions.contains(position)) -1
 				else position.adjacentPositions.intersect(minedPositions).size
-		return CellValue(rawValue)
+		return CellValue(rawValue.toString())
 	}
 
 }
