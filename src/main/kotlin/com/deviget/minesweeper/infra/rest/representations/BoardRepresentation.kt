@@ -8,6 +8,8 @@ import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.fasterxml.jackson.annotation.JsonProperty
 
+data class BoardResumeRepresentation(val boardIds: Set<String>)
+
 data class BoardRepresentation(
 		@JsonProperty val id: String?,
 		@JsonProperty val user: UserRepresentation,

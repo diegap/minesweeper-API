@@ -6,4 +6,5 @@ import com.deviget.minesweeper.core.domain.entities.BoardId
 interface BoardRepository {
 	fun save(board: Board)
 	fun find(boardId: BoardId): Board?
+	fun findAll(): Set<BoardId>
 }

@@ -13,4 +13,6 @@ class InMemoryBoardRepository(
 	}
 
 	override fun find(boardId: BoardId) = boards[boardId]
+
+	override fun findAll(): Set<BoardId> = boards.keys
 }
