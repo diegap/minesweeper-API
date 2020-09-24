@@ -5,6 +5,10 @@ import kotlin.random.Random
 object DefaultMinerRandomizer : MinerRandomizer {
 	override fun getMinedPositions(rows: Rows, cols: Cols, mines: Mines): Set<Position> {
 
+		require(mines.value < rows.value * cols.value) {
+			"Mines quantity must be less than ${rows.value * cols.value}"
+		}
+
 		val allPositions = mutableSetOf<Position>()
 		val minedPositions = mutableSetOf<Position>()
 

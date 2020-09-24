@@ -43,7 +43,7 @@ class MinedCell(private val cell: Cell) : Cell {
 
 }
 
-class FlaggedCell(val cell: Cell) : Cell {
+class FlaggedCell(private val cell: Cell) : Cell {
 	override fun reveal() = throw CellCannotBeRevealedException()
 	override fun getPosition(): Position {
 		return cell.getPosition()
@@ -58,7 +58,7 @@ class FlaggedCell(val cell: Cell) : Cell {
 	}
 }
 
-class QuestionMarkedCell(val cell: Cell) : Cell {
+class QuestionMarkedCell(private val cell: Cell) : Cell {
 	override fun reveal() = cell.reveal()
 	override fun getPosition(): Position {
 		return cell.getPosition()

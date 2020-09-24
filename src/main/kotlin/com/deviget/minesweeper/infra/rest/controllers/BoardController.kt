@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.infra.rest
+package com.deviget.minesweeper.infra.rest.controllers
 
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
@@ -31,11 +31,12 @@ class BoardController(
 	@PutMapping("/users/{user-id}/boards/{board-id}")
 	fun revealCell(@PathVariable("board-id") boardId: String,
 				   @RequestBody position: PositionRepresentation
-	) =
-			revealCell.invoke(
-					BoardId(UUID.fromString(boardId)),
-					Coordinates(Pair(position.x.toInt(), position.y.toInt()))
-			)?.let {
-				ResponseEntity(BoardViewRepresentation(it), HttpStatus.OK)
-			} ?: ResponseEntity(HttpStatus.NOT_FOUND)
+	): ResponseEntity<BoardViewRepresentation> {
+		return revealCell.invoke(
+				BoardId(UUID.fromString(boardId)),
+				Coordinates(Pair(position.x.toInt(), position.y.toInt()))
+		)?.let {
+			ResponseEntity(BoardViewRepresentation(it), HttpStatus.OK)
+		} ?: ResponseEntity(HttpStatus.NOT_FOUND)
+	}
 }
