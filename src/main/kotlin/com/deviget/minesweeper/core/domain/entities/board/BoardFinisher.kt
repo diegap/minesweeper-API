@@ -1,7 +1,7 @@
-package com.deviget.minesweeper.core.domain.exceptions
+package com.deviget.minesweeper.core.domain.entities.board
 
-import com.deviget.minesweeper.core.domain.entities.board.Board
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatus
+import com.deviget.minesweeper.core.domain.exceptions.GameOverException
+import com.deviget.minesweeper.core.domain.exceptions.GameOverSuccessException
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 
 interface BoardExceptionVisitor {

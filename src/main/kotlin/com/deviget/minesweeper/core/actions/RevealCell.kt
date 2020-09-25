@@ -1,9 +1,9 @@
 package com.deviget.minesweeper.core.actions
 
 import com.deviget.minesweeper.core.domain.entities.board.Board
+import com.deviget.minesweeper.core.domain.entities.board.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.entities.position.Coordinates
 import com.deviget.minesweeper.core.domain.entities.position.Position
-import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.exceptions.VisitableException
 
 class RevealCell(
