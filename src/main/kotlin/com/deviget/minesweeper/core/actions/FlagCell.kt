@@ -1,8 +1,8 @@
 package com.deviget.minesweeper.core.actions
 
-import com.deviget.minesweeper.core.domain.entities.BoardId
-import com.deviget.minesweeper.core.domain.entities.Coordinates
-import com.deviget.minesweeper.core.domain.entities.Position
+import com.deviget.minesweeper.core.domain.entities.board.BoardId
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.core.domain.entities.position.Position
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 
 class FlagCell(

@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.core.domain.entities
+package com.deviget.minesweeper.core.domain.entities.miner
 
 class Mines(val value: Int) {
 	init {

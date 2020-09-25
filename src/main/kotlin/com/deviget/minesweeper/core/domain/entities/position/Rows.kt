@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.core.domain.entities
+package com.deviget.minesweeper.core.domain.entities.position
 
 data class Rows(val value: Int) {
 	init {

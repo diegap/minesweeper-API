@@ -1,11 +1,11 @@
 package com.deviget.minesweeper.infra.rest.representations
 
 import com.deviget.minesweeper.core.actions.StartGame
-import com.deviget.minesweeper.core.domain.entities.Cols
-import com.deviget.minesweeper.core.domain.entities.Mines
-import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.entities.miner.Mines
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class BoardResumeRepresentation(val boardIds: Set<String>)

@@ -1,5 +1,17 @@
-package com.deviget.minesweeper.core.domain.entities
+package com.deviget.minesweeper.core.domain.entities.board
 
+import com.deviget.minesweeper.core.domain.entities.User
+import com.deviget.minesweeper.core.domain.entities.cell.BasicCell
+import com.deviget.minesweeper.core.domain.entities.cell.Cell
+import com.deviget.minesweeper.core.domain.entities.cell.CellValue
+import com.deviget.minesweeper.core.domain.entities.cell.MinedCell
+import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
+import com.deviget.minesweeper.core.domain.entities.miner.Mines
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.core.domain.entities.position.Edge
+import com.deviget.minesweeper.core.domain.entities.position.Position
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 
 class DefaultBoardFactory(

@@ -1,6 +1,6 @@
 package com.deviget.minesweeper.core.domain.exceptions
 
-import com.deviget.minesweeper.core.domain.entities.Board
+import com.deviget.minesweeper.core.domain.entities.board.Board
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 
 interface BoardExceptionVisitor {

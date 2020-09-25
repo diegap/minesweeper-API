@@ -1,6 +1,4 @@
-package com.deviget.minesweeper.core.domain.entities
-
-data class Coordinates(val value: Pair<Int, Int>)
+package com.deviget.minesweeper.core.domain.entities.position
 
 data class Position(
 		private val coordinates: Coordinates,

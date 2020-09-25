@@ -1,5 +1,16 @@
 package com.deviget.minesweeper.core.domain.entities
 
+import com.deviget.minesweeper.core.domain.entities.board.Board
+import com.deviget.minesweeper.core.domain.entities.board.BoardId
+import com.deviget.minesweeper.core.domain.entities.board.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.cell.Cell
+import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
+import com.deviget.minesweeper.core.domain.entities.miner.Mines
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.core.domain.entities.position.Edge
+import com.deviget.minesweeper.core.domain.entities.position.Position
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.deviget.minesweeper.core.domain.exceptions.GameOverException
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.nhaarman.mockitokotlin2.any

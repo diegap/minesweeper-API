@@ -4,10 +4,10 @@ import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetBoards
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
-import com.deviget.minesweeper.core.domain.entities.BoardFactory
-import com.deviget.minesweeper.core.domain.entities.DefaultBoardFactory
-import com.deviget.minesweeper.core.domain.entities.DefaultMinerRandomizer
-import com.deviget.minesweeper.core.domain.entities.MinerRandomizer
+import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
+import com.deviget.minesweeper.core.domain.entities.board.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.miner.DefaultMinerRandomizer
+import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
 import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.exceptions.BoardFinisher
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository

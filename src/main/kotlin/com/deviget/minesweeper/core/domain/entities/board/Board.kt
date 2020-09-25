@@ -1,8 +1,14 @@
-package com.deviget.minesweeper.core.domain.entities
+package com.deviget.minesweeper.core.domain.entities.board
 
-import com.deviget.minesweeper.core.domain.entities.BoardStatus.FINISHED
-import com.deviget.minesweeper.core.domain.entities.BoardStatus.PAUSED
-import com.deviget.minesweeper.core.domain.entities.BoardStatus.RUNNING
+import com.deviget.minesweeper.core.domain.entities.User
+import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.FINISHED
+import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.PAUSED
+import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.RUNNING
+import com.deviget.minesweeper.core.domain.entities.cell.Cell
+import com.deviget.minesweeper.core.domain.entities.cell.FlaggedCell
+import com.deviget.minesweeper.core.domain.entities.cell.QuestionMarkedCell
+import com.deviget.minesweeper.core.domain.entities.position.Edge
+import com.deviget.minesweeper.core.domain.entities.position.Position
 import com.deviget.minesweeper.core.domain.exceptions.GameOverSuccessException
 import java.util.UUID
 import java.util.concurrent.TimeUnit

@@ -1,16 +1,16 @@
 package com.deviget.minesweeper.core.actions
 
-import com.deviget.minesweeper.core.domain.entities.Board
-import com.deviget.minesweeper.core.domain.entities.BoardId
-import com.deviget.minesweeper.core.domain.entities.Cols
-import com.deviget.minesweeper.core.domain.entities.Coordinates
-import com.deviget.minesweeper.core.domain.entities.DefaultBoardFactory
-import com.deviget.minesweeper.core.domain.entities.Mines
-import com.deviget.minesweeper.core.domain.entities.Position
-import com.deviget.minesweeper.core.domain.entities.QuestionMarkedCell
-import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.entities.board.Board
+import com.deviget.minesweeper.core.domain.entities.board.BoardId
+import com.deviget.minesweeper.core.domain.entities.board.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.cell.QuestionMarkedCell
+import com.deviget.minesweeper.core.domain.entities.miner.Mines
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.core.domain.entities.position.Position
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any

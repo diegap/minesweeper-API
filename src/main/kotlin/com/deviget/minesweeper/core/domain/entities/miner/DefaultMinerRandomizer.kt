@@ -1,5 +1,10 @@
-package com.deviget.minesweeper.core.domain.entities
+package com.deviget.minesweeper.core.domain.entities.miner
 
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.core.domain.entities.position.Edge
+import com.deviget.minesweeper.core.domain.entities.position.Position
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import kotlin.random.Random
 
 object DefaultMinerRandomizer : MinerRandomizer {

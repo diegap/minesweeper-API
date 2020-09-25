@@ -1,11 +1,11 @@
 package com.deviget.minesweeper.core.actions
 
-import com.deviget.minesweeper.core.domain.entities.BoardFactory
-import com.deviget.minesweeper.core.domain.entities.Cols
-import com.deviget.minesweeper.core.domain.entities.Mines
-import com.deviget.minesweeper.core.domain.entities.Rows
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
+import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
+import com.deviget.minesweeper.core.domain.entities.miner.Mines
+import com.deviget.minesweeper.core.domain.entities.position.Cols
+import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atMost

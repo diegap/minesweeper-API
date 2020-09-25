@@ -3,9 +3,9 @@ package com.deviget.minesweeper.infra.rest.controllers
 import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
-import com.deviget.minesweeper.core.domain.entities.BoardId
-import com.deviget.minesweeper.core.domain.entities.BoardStatus.FINISHED
-import com.deviget.minesweeper.core.domain.entities.Coordinates
+import com.deviget.minesweeper.core.domain.entities.board.BoardId
+import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.FINISHED
+import com.deviget.minesweeper.core.domain.entities.position.Coordinates
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.PositionRepresentation

@@ -1,7 +1,7 @@
 package com.deviget.minesweeper.infra.rest.representations
 
-import com.deviget.minesweeper.core.domain.entities.Board
-import com.deviget.minesweeper.core.domain.entities.Position
+import com.deviget.minesweeper.core.domain.entities.board.Board
+import com.deviget.minesweeper.core.domain.entities.position.Position
 import com.fasterxml.jackson.annotation.JsonProperty
 import kotlin.collections.Map.Entry
 
