@@ -20,6 +20,12 @@ enum class BoardStatusCommandName {
 	RESUME
 }
 
+enum class BoardActionCommandName {
+	REVEAL,
+	FLAG,
+	QUESTION
+}
+
 enum class BoardStatus {
 	RUNNING,
 	PAUSED,
