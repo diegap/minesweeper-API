@@ -1,7 +1,6 @@
 package com.deviget.minesweeper.core.domain.entities.board
 
 import com.deviget.minesweeper.core.domain.entities.User
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.FINISHED
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.PAUSED
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.RUNNING
 import com.deviget.minesweeper.core.domain.entities.cell.Cell
@@ -12,15 +11,18 @@ import com.deviget.minesweeper.core.domain.entities.position.Position
 import com.deviget.minesweeper.core.domain.exceptions.GameOverSuccessException
 import java.util.UUID
 import java.util.concurrent.TimeUnit
-import kotlin.time.ExperimentalTime
-import kotlin.time.toDuration
+import java.util.concurrent.TimeUnit.SECONDS
+
 
 data class BoardId(val value: UUID)
 
 enum class BoardStatus {
 	RUNNING,
 	PAUSED,
-	FINISHED
+	WIN,
+	LOSE;
+
+	fun isFinished(): Boolean = this == WIN || this == LOSE
 }
 
 class Board(
@@ -69,14 +71,16 @@ class Board(
 		status = RUNNING
 	}
 
-	fun finish() {
-		lastAccess = System.nanoTime()
-		status = FINISHED
+	fun finish(boardStatus: BoardStatus) {
+		with(System.nanoTime()) {
+			elapsedTime.add((this.minus(lastAccess)))
+			lastAccess = this
+			status = boardStatus
+		}
 	}
 
-	@ExperimentalTime
-	val getElapsedTime
-		get() = elapsedTime.sum().toDuration(TimeUnit.SECONDS)
+	val getElapsedTime: Long
+		get() = SECONDS.convert(elapsedTime.sum(), TimeUnit.NANOSECONDS)
 
 	private fun safeReveal(positions: Set<Position>) {
 		if (positions.touchAnyMine()) return

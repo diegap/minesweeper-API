@@ -10,7 +10,8 @@ class QuestionMarkCell(
 ) {
 	operator fun invoke(boardId: BoardId, coordinates: Coordinates) =
 			boardRepository.find(boardId)?.let {
-				it.questionMarkCell(Position(coordinates, it.edge))
+
+			it.questionMarkCell(Position(coordinates, it.edge))
 				boardRepository.save(it)
 				it
 			}

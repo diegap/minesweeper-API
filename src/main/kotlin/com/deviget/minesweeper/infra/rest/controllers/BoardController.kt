@@ -4,12 +4,13 @@ import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.FINISHED
 import com.deviget.minesweeper.core.domain.entities.position.Coordinates
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.PositionRepresentation
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -29,7 +30,7 @@ class BoardController(
 	@PostMapping("/users/{user-id}/boards")
 	fun createBoard(@RequestBody boardRepresentation: BoardRepresentation): ResponseEntity<BoardViewRepresentation> {
 		val board = startGame(boardRepresentation.toActionData())
-		return ResponseEntity(BoardViewRepresentation(board), HttpStatus.CREATED)
+		return ResponseEntity(BoardViewRepresentation(board), CREATED)
 	}
 
 	@PutMapping("/users/{user-id}/boards/{board-id}")
@@ -37,8 +38,9 @@ class BoardController(
 				   @RequestBody position: PositionRepresentation
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
+				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), OK)
 				revealCell(it, Coordinates(Pair(position.x.toInt(), position.y.toInt()))).run {
-					ResponseEntity(BoardViewRepresentation(this), HttpStatus.OK)
+					ResponseEntity(BoardViewRepresentation(this), OK)
 				}
 			} ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
@@ -49,9 +51,9 @@ class BoardController(
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
 				when {
-					it.status == FINISHED -> ResponseEntity(HttpStatus.NOT_FOUND)
+					it.status.isFinished() -> ResponseEntity(HttpStatus.NOT_FOUND)
 					it.user.userName.value != userName -> ResponseEntity(HttpStatus.NOT_FOUND)
-					else -> ResponseEntity(BoardViewRepresentation(it), HttpStatus.OK)
+					else -> ResponseEntity(BoardViewRepresentation(it), OK)
 				}
 			} ?: ResponseEntity(HttpStatus.NOT_FOUND)
 

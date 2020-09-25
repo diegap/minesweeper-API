@@ -18,12 +18,14 @@ data class ColViewRepresentation(
 data class BoardViewRepresentation(
 		@JsonProperty val boardId: String,
 		@JsonProperty val rows: List<RowViewRepresentation>,
-		@JsonProperty val status: String
+		@JsonProperty val status: String,
+		val elapsedTimeInSeconds: Long
 ) {
 	constructor(board: Board) : this(
 			boardId = board.id.value.toString(),
 			rows = buildBoardView(board),
-			status = board.status.name
+			status = board.status.name,
+			elapsedTimeInSeconds = board.getElapsedTime
 	)
 
 	companion object {
