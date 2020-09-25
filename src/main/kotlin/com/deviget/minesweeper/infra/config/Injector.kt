@@ -1,7 +1,11 @@
 package com.deviget.minesweeper.infra.config
 
+import com.deviget.minesweeper.core.actions.FlagCell
 import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetBoards
+import com.deviget.minesweeper.core.actions.PauseBoard
+import com.deviget.minesweeper.core.actions.QuestionMarkCell
+import com.deviget.minesweeper.core.actions.ResumeBoard
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
@@ -46,6 +50,18 @@ open class Injector {
 
 	@Bean
 	open fun revealCell(boardFinisher: BoardExceptionVisitor) = RevealCell(boardFinisher)
+
+	@Bean
+	open fun flagCell(boardRepository: BoardRepository) = FlagCell(boardRepository)
+
+	@Bean
+	open fun questionMarkCell(boardRepository: BoardRepository) = QuestionMarkCell(boardRepository)
+
+	@Bean
+	open fun pauseBoard(boardRepository: BoardRepository) = PauseBoard(boardRepository)
+
+	@Bean
+	open fun resumeBoard(boardRepository: BoardRepository) = ResumeBoard(boardRepository)
 
 	@Bean
 	open fun getBoards(boardRepository: BoardRepository) = GetBoards(boardRepository)
