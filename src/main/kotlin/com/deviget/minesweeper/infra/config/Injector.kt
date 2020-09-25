@@ -1,8 +1,10 @@
 package com.deviget.minesweeper.infra.config
 
+import com.deviget.minesweeper.core.actions.CreateUser
 import com.deviget.minesweeper.core.actions.FlagCell
 import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetBoards
+import com.deviget.minesweeper.core.actions.GetUser
 import com.deviget.minesweeper.core.actions.PauseBoard
 import com.deviget.minesweeper.core.actions.QuestionMarkCell
 import com.deviget.minesweeper.core.actions.ResumeBoard
@@ -16,8 +18,10 @@ import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.exceptions.BoardFinisher
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository
+import com.deviget.minesweeper.core.domain.repositories.UserRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryBoardIdRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryBoardRepository
+import com.deviget.minesweeper.infra.repositories.InMemoryUserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -68,5 +72,14 @@ open class Injector {
 
 	@Bean
 	open fun getBoardById(boardRepository: BoardRepository) = GetBoardById(boardRepository)
+
+	@Bean
+	open fun userRepository(): UserRepository = InMemoryUserRepository()
+
+	@Bean
+	open fun createUser(userRepository: UserRepository) = CreateUser(userRepository)
+
+	@Bean
+	open fun getUser(userRepository: UserRepository) = GetUser(userRepository)
 
 }
