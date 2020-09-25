@@ -21,12 +21,10 @@ import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.Verify
 import org.amshove.kluent.When
 import org.amshove.kluent.`should be`
-import org.amshove.kluent.called
 import org.amshove.kluent.calling
 import org.amshove.kluent.itReturns
 import org.amshove.kluent.on
 import org.amshove.kluent.that
-import org.amshove.kluent.was
 import org.junit.Before
 import org.junit.Test
 import java.util.UUID
@@ -66,14 +64,10 @@ class RevealCellTest {
 				User(UserName("user1")),
 				miner
 		)
-		givenBoardRepository(boardId)
 		givenRevealCellAction()
 
-		whenRevealCellisInvoked(
-				boardId,
-				Coordinates(Pair(2, 2)))
+		whenRevealCellisInvoked(Coordinates(Pair(2, 2)))
 
-		thenBoardIsRetrieved()
 		thenCellIsRevealed()
 
 	}
@@ -92,17 +86,18 @@ class RevealCellTest {
 				User(UserName("user1")),
 				miner
 		)
-		givenBoardRepository(boardId)
 		givenRevealCellAction()
 		givenBoardExceptionVisitor()
 
-		whenRevealCellisInvoked(
-				boardId,
-				Coordinates(Pair(2, 2)))
+		whenRevealCellisInvoked(Coordinates(Pair(2, 2)))
 
-		thenBoardIsRetrieved()
 		thenGamerOverExceptionIsHandled()
 
+	}
+
+	private fun givenBoardIdRepository() {
+		boardIdRepository = mock()
+		When calling boardIdRepository.getNextId() itReturns boardId
 	}
 
 	private fun givenMinerReturningMinesAt(positions: Set<Position>) {
@@ -114,30 +109,16 @@ class RevealCellTest {
 		board = DefaultBoardFactory(miner, boardIdRepository).createBoard(rows, cols, mines, user)
 	}
 
-	private fun givenBoardIdRepository() {
-		boardIdRepository = mock()
-		When calling boardIdRepository.getNextId() itReturns boardId
-	}
-
-	private fun givenBoardRepository(boardId: BoardId) {
-		boardRepository = mock()
-		When calling boardRepository.find(boardId) itReturns board
-	}
-
 	private fun givenRevealCellAction() {
-		action = RevealCell(boardRepository, boardExceptionVisitor)
+		action = RevealCell(boardExceptionVisitor)
 	}
 
 	private fun givenBoardExceptionVisitor() {
 		When calling boardExceptionVisitor.visit(any<GameOverException>(), any()) itReturns board
 	}
 
-	private fun whenRevealCellisInvoked(boardId: BoardId, coordinates: Coordinates) {
-		returnedBoard = action.invoke(boardId, coordinates)!!
-	}
-
-	private fun thenBoardIsRetrieved() {
-		Verify on boardRepository that boardRepository.find(any()) was called
+	private fun whenRevealCellisInvoked(coordinates: Coordinates) {
+		returnedBoard = action.invoke(board, coordinates)
 	}
 
 	private fun thenCellIsRevealed() {

@@ -35,15 +35,12 @@ class BoardController(
 	@PutMapping("/users/{user-id}/boards/{board-id}")
 	fun revealCell(@PathVariable("board-id") boardId: String,
 				   @RequestBody position: PositionRepresentation
-	): ResponseEntity<BoardViewRepresentation> {
-
-		return revealCell(
-				BoardId(UUID.fromString(boardId)),
-				Coordinates(Pair(position.x.toInt(), position.y.toInt()))
-		)?.let {
-			ResponseEntity(BoardViewRepresentation(it), HttpStatus.OK)
-		} ?: ResponseEntity(HttpStatus.NOT_FOUND)
-	}
+	) =
+			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
+				revealCell(it, Coordinates(Pair(position.x.toInt(), position.y.toInt()))).run {
+					ResponseEntity(BoardViewRepresentation(this), HttpStatus.OK)
+				}
+			} ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
 	@GetMapping("/users/{user-id}/boards/{board-id}")
 	fun getBoard(

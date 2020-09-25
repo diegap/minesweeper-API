@@ -45,10 +45,7 @@ open class Injector {
 	open fun boardFinisher(boardRepository: BoardRepository): BoardExceptionVisitor = BoardFinisher(boardRepository)
 
 	@Bean
-	open fun revealCell(
-			boardRepository: BoardRepository,
-			boardFinisher: BoardExceptionVisitor
-	) = RevealCell(boardRepository, boardFinisher)
+	open fun revealCell(boardFinisher: BoardExceptionVisitor) = RevealCell(boardFinisher)
 
 	@Bean
 	open fun getBoards(boardRepository: BoardRepository) = GetBoards(boardRepository)
