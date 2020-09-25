@@ -13,8 +13,12 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.SECONDS
 
-
 data class BoardId(val value: UUID)
+
+enum class BoardStatusCommandName {
+	PAUSE,
+	RESUME
+}
 
 enum class BoardStatus {
 	RUNNING,

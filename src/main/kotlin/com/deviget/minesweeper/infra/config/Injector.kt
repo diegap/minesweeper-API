@@ -13,7 +13,10 @@ import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.board.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.board.BoardFinisher
+import com.deviget.minesweeper.core.domain.entities.board.BoardStatusCommandName
 import com.deviget.minesweeper.core.domain.entities.board.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.board.command.PauseBoardCommand
+import com.deviget.minesweeper.core.domain.entities.board.command.ResumeBoardCommand
 import com.deviget.minesweeper.core.domain.entities.miner.DefaultMinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
@@ -81,5 +84,14 @@ open class Injector {
 
 	@Bean
 	open fun getUser(userRepository: UserRepository) = GetUser(userRepository)
+
+	@Bean
+	fun boardStatusCommandMap(
+			pauseBoard: PauseBoard,
+			resumeBoard: ResumeBoard
+	) = mapOf(
+			BoardStatusCommandName.PAUSE to PauseBoardCommand(pauseBoard),
+			BoardStatusCommandName.RESUME to ResumeBoardCommand(resumeBoard)
+	)
 
 }
