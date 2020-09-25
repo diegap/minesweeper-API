@@ -28,8 +28,8 @@ class BoardAdminController(
 						ResponseEntity(BoardResumeRepresentation(boardIds = this), HttpStatus.OK)
 					}
 
-	@GetMapping("/admin/boards/{id}")
-	fun retrieveBoard(@PathParam("id") boardId: String) =
+	@GetMapping("/admin/boards/{board-id}")
+	fun retrieveBoard(@PathParam("board-id") boardId: String) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
 				ResponseEntity(AdminBoardViewRepresentation(it), HttpStatus.OK)
 			} ?: ResponseEntity(HttpStatus.NOT_FOUND)

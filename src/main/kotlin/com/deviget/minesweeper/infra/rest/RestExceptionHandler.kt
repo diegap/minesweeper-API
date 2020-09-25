@@ -16,8 +16,12 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
 	@ExceptionHandler(
 			IllegalArgumentException::class,
 			IllegalStateException::class,
-			CellCannotBeRevealedException::class
-	)
+			CellCannotBeRevealedException::class)
 	fun handle(exception: RuntimeException, request: WebRequest) =
 			ResponseEntity(ApiError(exception.message ?: "Error"), HttpStatus.CONFLICT)
+
+	@ExceptionHandler(Exception::class)
+	fun handle(exception: Exception, request: WebRequest) =
+			ResponseEntity(ApiError(exception.message ?: "Error"), HttpStatus.INTERNAL_SERVER_ERROR)
+
 }

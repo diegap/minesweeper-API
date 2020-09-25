@@ -17,11 +17,13 @@ data class ColViewRepresentation(
 
 data class BoardViewRepresentation(
 		@JsonProperty val boardId: String,
-		@JsonProperty val rows: List<RowViewRepresentation>
+		@JsonProperty val rows: List<RowViewRepresentation>,
+		@JsonProperty val status: String
 ) {
 	constructor(board: Board) : this(
 			boardId = board.id.value.toString(),
-			rows = buildBoardView(board)
+			rows = buildBoardView(board),
+			status = board.status.name
 	)
 
 	companion object {
