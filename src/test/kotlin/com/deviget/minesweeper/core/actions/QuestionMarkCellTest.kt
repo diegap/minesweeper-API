@@ -24,6 +24,7 @@ import java.util.UUID
 
 class QuestionMarkCellTest {
 
+	private lateinit var board: Board
 	private lateinit var boardIdRepository: BoardIdRepository
 	private lateinit var returnedBoard: Board
 	private lateinit var action: QuestionMarkCell
@@ -31,7 +32,7 @@ class QuestionMarkCellTest {
 	private val uuid = UUID.randomUUID()
 
 	@Test
-	fun `questiono mark a cell`() {
+	fun `question mark a cell`() {
 		givenBoardIdRepository()
 		givenBoardRepository(
 				BoardId(uuid),
@@ -42,7 +43,7 @@ class QuestionMarkCellTest {
 		)
 		givenQuestionMarkCellAction()
 
-		whenActionIsInvoked(BoardId(uuid), Coordinates(Pair(1, 1)))
+		whenActionIsInvoked(Coordinates(Pair(1, 1)))
 
 		thenCellIsQuestionMarked(BoardId(uuid), Coordinates(Pair(1, 1)))
 
@@ -54,7 +55,7 @@ class QuestionMarkCellTest {
 	}
 
 	private fun givenBoardRepository(boardId: BoardId, rows: Rows, cols: Cols, mines: Mines, user: User) {
-		val board = DefaultBoardFactory(mock(), boardIdRepository).createBoard(rows, cols, mines, user)
+		board = DefaultBoardFactory(mock(), boardIdRepository).createBoard(rows, cols, mines, user)
 		boardRepository = mock()
 		whenever(boardRepository.find(boardId)).thenReturn(board)
 	}
@@ -63,8 +64,8 @@ class QuestionMarkCellTest {
 		action = QuestionMarkCell(boardRepository)
 	}
 
-	private fun whenActionIsInvoked(boardId: BoardId, coordinates: Coordinates) {
-		returnedBoard = action.invoke(boardId, coordinates)!!
+	private fun whenActionIsInvoked(coordinates: Coordinates) {
+		returnedBoard = action.invoke(board, coordinates)
 	}
 
 	private fun thenCellIsQuestionMarked(boardId: BoardId, coordinates: Coordinates) {

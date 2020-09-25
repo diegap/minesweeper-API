@@ -15,7 +15,6 @@ import com.deviget.minesweeper.core.domain.entities.position.Rows
 import com.deviget.minesweeper.core.domain.exceptions.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.exceptions.GameOverException
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
-import com.deviget.minesweeper.core.domain.repositories.BoardRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.Verify
@@ -33,7 +32,6 @@ class RevealCellTest {
 
 	private lateinit var boardExceptionVisitor: BoardExceptionVisitor
 	private lateinit var returnedBoard: Board
-	private lateinit var boardRepository: BoardRepository
 	private lateinit var boardIdRepository: BoardIdRepository
 
 	private lateinit var action: RevealCell

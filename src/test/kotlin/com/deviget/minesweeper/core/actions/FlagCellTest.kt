@@ -24,6 +24,7 @@ import java.util.UUID
 
 class FlagCellTest {
 
+	private lateinit var board: Board
 	private lateinit var boardIdRepository: BoardIdRepository
 	private lateinit var returnedBoard: Board
 	private lateinit var action: FlagCell
@@ -42,7 +43,7 @@ class FlagCellTest {
 		)
 		givenFlagCellAction()
 
-		whenActionIsInvoked(BoardId(uuid), Coordinates(Pair(1, 1)))
+		whenActionIsInvoked(Coordinates(Pair(1, 1)))
 
 		thenCellIsFlagged(BoardId(uuid), Coordinates(Pair(1, 1)))
 	}
@@ -53,7 +54,7 @@ class FlagCellTest {
 	}
 
 	private fun givenBoardRepository(boardId: BoardId, rows: Rows, cols: Cols, mines: Mines, user: User) {
-		val board = DefaultBoardFactory(mock(), boardIdRepository).createBoard(rows, cols, mines, user)
+		board = DefaultBoardFactory(mock(), boardIdRepository).createBoard(rows, cols, mines, user)
 		boardRepository = mock()
 		whenever(boardRepository.find(boardId)).thenReturn(board)
 	}
@@ -62,8 +63,8 @@ class FlagCellTest {
 		action = FlagCell(boardRepository)
 	}
 
-	private fun whenActionIsInvoked(boardId: BoardId, coordinates: Coordinates) {
-		returnedBoard = action.invoke(boardId, coordinates)!!
+	private fun whenActionIsInvoked(coordinates: Coordinates) {
+		returnedBoard = action.invoke(board, coordinates)
 	}
 
 	private fun thenCellIsFlagged(boardId: BoardId, coordinates: Coordinates) {
