@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.infra.rest.controllers
+package com.deviget.minesweeper.infra.rest.controllers.admin
 
 import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetBoards

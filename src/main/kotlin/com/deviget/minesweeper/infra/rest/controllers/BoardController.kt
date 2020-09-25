@@ -2,13 +2,14 @@ package com.deviget.minesweeper.infra.rest.controllers
 
 import com.deviget.minesweeper.core.actions.FlagCell
 import com.deviget.minesweeper.core.actions.GetBoardById
+import com.deviget.minesweeper.core.actions.GetUser
 import com.deviget.minesweeper.core.actions.PauseBoard
 import com.deviget.minesweeper.core.actions.QuestionMarkCell
 import com.deviget.minesweeper.core.actions.ResumeBoard
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
+import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
-import com.deviget.minesweeper.core.domain.entities.position.Coordinates
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.PositionRepresentation
@@ -33,14 +34,20 @@ class BoardController(
 		private val flagCell: FlagCell,
 		private val questionMarkCell: QuestionMarkCell,
 		private val pauseBoard: PauseBoard,
-		private val resumeBoard: ResumeBoard
+		private val resumeBoard: ResumeBoard,
+		private val getUser: GetUser
 ) {
 
 	@PostMapping("/users/{user-id}/boards")
-	fun createBoard(@RequestBody boardRepresentation: BoardRepresentation): ResponseEntity<BoardViewRepresentation> {
-		val board = startGame(boardRepresentation.toActionData())
-		return ResponseEntity(BoardViewRepresentation(board), CREATED)
-	}
+	fun createBoard(
+			@RequestBody boardRepresentation: BoardRepresentation,
+			@PathVariable("user-id") userName: String
+	) =
+			getUser(UserName(userName))?.let {
+				with(startGame(boardRepresentation.toActionData())) {
+					ResponseEntity(BoardViewRepresentation(this), CREATED)
+				}
+			} ?: ResponseEntity(NOT_FOUND)
 
 	@GetMapping("/users/{user-id}/boards/{board-id}")
 	fun getBoard(
@@ -48,11 +55,8 @@ class BoardController(
 			@PathVariable("board-id") boardId: String
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
-				when {
-					it.status.isFinished() -> ResponseEntity(NOT_FOUND)
-					it.user.userName.value != userName -> ResponseEntity(NOT_FOUND)
-					else -> ResponseEntity(BoardViewRepresentation(it), OK)
-				}
+				if (it.user.userName.value != userName) ResponseEntity(NOT_FOUND)
+				else ResponseEntity(BoardViewRepresentation(it), OK)
 			} ?: ResponseEntity(NOT_FOUND)
 
 	@PutMapping("/users/{user-id}/boards/{board-id}/reveal")
@@ -61,7 +65,7 @@ class BoardController(
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
 				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), OK)
-				revealCell(it, Coordinates(Pair(position.x.toInt(), position.y.toInt()))).run {
+				revealCell(it, position.toDomain()).run {
 					ResponseEntity(BoardViewRepresentation(this), OK)
 				}
 			} ?: ResponseEntity(NOT_FOUND)
@@ -71,8 +75,8 @@ class BoardController(
 				 @RequestBody position: PositionRepresentation
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
-				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), OK)
-				flagCell(it, Coordinates(Pair(position.x.toInt(), position.y.toInt()))).run {
+				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), CONFLICT)
+				flagCell(it, position.toDomain()).run {
 					ResponseEntity(BoardViewRepresentation(this), OK)
 				}
 			} ?: ResponseEntity(NOT_FOUND)
@@ -82,8 +86,8 @@ class BoardController(
 						 @RequestBody position: PositionRepresentation
 	) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
-				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), OK)
-				questionMarkCell(it, Coordinates(Pair(position.x.toInt(), position.y.toInt()))).run {
+				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), CONFLICT)
+				questionMarkCell(it, position.toDomain()).run {
 					ResponseEntity(BoardViewRepresentation(this), OK)
 				}
 			} ?: ResponseEntity(NOT_FOUND)

@@ -1,6 +1,7 @@
 package com.deviget.minesweeper.infra.rest.representations
 
 import com.deviget.minesweeper.core.domain.entities.User
+import com.deviget.minesweeper.core.domain.entities.UserName
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class UserRepresentation(
@@ -9,4 +10,6 @@ data class UserRepresentation(
 	constructor(user: User) : this(
 			userName = user.userName.value
 	)
+
+	fun toDomain(): User = User(UserName(userName))
 }
