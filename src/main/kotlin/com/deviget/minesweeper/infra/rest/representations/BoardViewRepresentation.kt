@@ -30,21 +30,27 @@ data class BoardViewRepresentation(
 
 	companion object {
 
-		fun buildBoardView(board: Board) =
-				board.cellsByPosition.keys
-						.groupBy { it.y }
-						.map { row ->
-							RowViewRepresentation(mapRows(row, board))
-						}
+		fun buildBoardView(board: Board): List<RowViewRepresentation> {
+			return board.cellsByPosition.keys
+					.groupBy { it.y }
+					.map { row ->
+						RowViewRepresentation(mapRows(row, board))
+					}
+		}
 
 		private fun mapRows(row: Entry<Int, List<Position>>, board: Board) =
 				row.value.map {
 					ColViewRepresentation(
 							x = it.x.toString(),
 							y = it.y.toString(),
-							value = board.cellsByPosition[it]?.getValue()?.value.orEmpty()
+							value = mapValue(board, it)
 					)
 				}
+
+		private fun mapValue(board: Board, position: Position) =
+				if (board.isFinished.not()) board.cellsByPosition[position]?.getValue()?.value.orEmpty()
+				else board.cellsByPosition[position]?.getHiddenValue()?.value.orEmpty()
+
 	}
 
 }

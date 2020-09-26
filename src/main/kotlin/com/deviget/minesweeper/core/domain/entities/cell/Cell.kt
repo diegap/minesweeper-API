@@ -7,4 +7,5 @@ interface Cell {
 	fun getPosition(): Position
 	fun isVisible(): Boolean
 	fun getValue(): CellValue
+	fun getHiddenValue(): CellValue
 }

@@ -17,4 +17,6 @@ class QuestionMarkedCell(private val cell: Cell) : Cell {
 	override fun getValue(): CellValue {
 		return CellValue(QUESTION.name)
 	}
+
+	override fun getHiddenValue() = cell.getHiddenValue()
 }

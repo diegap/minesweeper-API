@@ -25,4 +25,6 @@ class BasicCell(
 		else CellValue(HIDDEN.name)
 	}
 
+	override fun getHiddenValue() = cellValue
+
 }

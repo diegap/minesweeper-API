@@ -17,4 +17,6 @@ class FlaggedCell(private val cell: Cell) : Cell {
 	override fun getValue(): CellValue {
 		return CellValue(FLAG.name)
 	}
+
+	override fun getHiddenValue() = cell.getHiddenValue()
 }

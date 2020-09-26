@@ -78,6 +78,8 @@ class Board(
 		}
 	}
 
+	val isFinished get() = status.isFinished()
+
 	val getElapsedTime: Long
 		get() = SECONDS.convert(elapsedTime.sum(), TimeUnit.NANOSECONDS)
 

@@ -17,4 +17,6 @@ class MinedCell(private val cell: Cell) : Cell {
 
 	override fun getValue() = CellValue(HIDDEN.name)
 
+	override fun getHiddenValue() = cell.getHiddenValue()
+
 }
