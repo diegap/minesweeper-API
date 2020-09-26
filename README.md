@@ -48,6 +48,8 @@ POST /users/:userName/boards
 ```
 > Response **201 CREATED**
 
+> Response **404 NOT FOUND**
+
 If the **userName** does not exist an http status 404 is returned.
 
 #### Retrieve boards (admin)
@@ -69,7 +71,9 @@ GET /admin/boards
 PUT /users/:userName/boards/:boardId/status
 ```
 **:userName** string that defines the userName
+
 **:boardId** string that defines the boardId
+
 ```json
 {
     "status": "PAUSE"
@@ -86,6 +90,7 @@ The allowed values for **status** are "PAUSE" and "RESUME".
 PUT /users/:userName/boards/:boardId/cells
 ```
 **:userName** string that defines the userName
+
 **:boardId** string that defines the boardId
 ```json
 {
