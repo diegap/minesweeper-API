@@ -1,7 +1,7 @@
 package com.deviget.minesweeper.infra.rest.controllers.admin
 
-import com.deviget.minesweeper.core.actions.GetBoardById
-import com.deviget.minesweeper.core.actions.GetBoards
+import com.deviget.minesweeper.core.actions.board.GetBoardById
+import com.deviget.minesweeper.core.actions.board.GetBoards
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
 import com.deviget.minesweeper.infra.rest.representations.AdminBoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardResumeRepresentation

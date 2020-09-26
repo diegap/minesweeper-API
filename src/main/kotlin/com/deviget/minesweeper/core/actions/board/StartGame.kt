@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.core.actions
+package com.deviget.minesweeper.core.actions.board
 
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.board.Board

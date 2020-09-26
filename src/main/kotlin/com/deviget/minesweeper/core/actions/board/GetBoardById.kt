@@ -1,4 +1,4 @@
-package com.deviget.minesweeper.core.actions
+package com.deviget.minesweeper.core.actions.board
 
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
 import com.deviget.minesweeper.core.domain.repositories.BoardRepository

@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.core.actions
 
+import com.deviget.minesweeper.core.actions.board.StartGame
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.entities.board.BoardFactory

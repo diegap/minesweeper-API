@@ -1,5 +1,6 @@
 package com.deviget.minesweeper.core.actions
 
+import com.deviget.minesweeper.core.actions.cell.FlagCell
 import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.entities.board.Board

@@ -1,8 +1,8 @@
 package com.deviget.minesweeper.infra.rest.controllers
 
-import com.deviget.minesweeper.core.actions.GetBoardById
-import com.deviget.minesweeper.core.actions.GetUser
-import com.deviget.minesweeper.core.actions.StartGame
+import com.deviget.minesweeper.core.actions.board.GetBoardById
+import com.deviget.minesweeper.core.actions.board.StartGame
+import com.deviget.minesweeper.core.actions.user.GetUser
 import com.deviget.minesweeper.core.domain.entities.UserName
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation

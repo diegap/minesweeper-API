@@ -1,15 +1,15 @@
 package com.deviget.minesweeper.infra.config
 
-import com.deviget.minesweeper.core.actions.CreateUser
-import com.deviget.minesweeper.core.actions.FlagCell
-import com.deviget.minesweeper.core.actions.GetBoardById
-import com.deviget.minesweeper.core.actions.GetBoards
-import com.deviget.minesweeper.core.actions.GetUser
-import com.deviget.minesweeper.core.actions.PauseBoard
-import com.deviget.minesweeper.core.actions.QuestionMarkCell
-import com.deviget.minesweeper.core.actions.ResumeBoard
-import com.deviget.minesweeper.core.actions.RevealCell
-import com.deviget.minesweeper.core.actions.StartGame
+import com.deviget.minesweeper.core.actions.board.GetBoardById
+import com.deviget.minesweeper.core.actions.board.GetBoards
+import com.deviget.minesweeper.core.actions.board.PauseBoard
+import com.deviget.minesweeper.core.actions.board.ResumeBoard
+import com.deviget.minesweeper.core.actions.board.StartGame
+import com.deviget.minesweeper.core.actions.cell.FlagCell
+import com.deviget.minesweeper.core.actions.cell.QuestionMarkCell
+import com.deviget.minesweeper.core.actions.cell.RevealCell
+import com.deviget.minesweeper.core.actions.user.CreateUser
+import com.deviget.minesweeper.core.actions.user.GetUser
 import com.deviget.minesweeper.core.domain.entities.board.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.board.BoardFinisher

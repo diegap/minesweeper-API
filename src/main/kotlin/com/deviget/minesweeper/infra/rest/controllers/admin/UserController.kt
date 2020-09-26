@@ -1,6 +1,6 @@
 package com.deviget.minesweeper.infra.rest.controllers.admin
 
-import com.deviget.minesweeper.core.actions.CreateUser
+import com.deviget.minesweeper.core.actions.user.CreateUser
 import com.deviget.minesweeper.infra.rest.representations.UserRepresentation
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.web.bind.annotation.PostMapping
