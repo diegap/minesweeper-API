@@ -4,7 +4,6 @@ import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.PAUSED
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.RUNNING
 import com.deviget.minesweeper.core.domain.entities.cell.Cell
-import com.deviget.minesweeper.core.domain.entities.cell.CellValue
 import com.deviget.minesweeper.core.domain.entities.cell.FlaggedCell
 import com.deviget.minesweeper.core.domain.entities.cell.QuestionMarkedCell
 import com.deviget.minesweeper.core.domain.entities.position.Edge
@@ -45,7 +44,7 @@ class Board(
 
 	fun unflagCell(position: Position) {
 		getCell(position)?.let {
-			cellsByPosition[position] = (it as FlaggedCell).unMark()
+			if (it is FlaggedCell) cellsByPosition[position] = it.unMark()
 		}
 	}
 
@@ -57,7 +56,7 @@ class Board(
 
 	fun unquestionMarkCell(position: Position) {
 		getCell(position)?.let {
-			cellsByPosition[position] = (it as QuestionMarkedCell).unMark()
+			if (it is QuestionMarkedCell) cellsByPosition[position] = it.unMark()
 		}
 	}
 
@@ -106,13 +105,6 @@ class Board(
 							.toSet()
 			)
 		}
-	}
-
-	private fun getCellValue(position: Position): CellValue {
-		val rawValue =
-				if (minedPositions.contains(position)) -1
-				else position.adjacentPositions.intersect(minedPositions).size
-		return CellValue(rawValue.toString())
 	}
 
 	private fun checkRevealedCells() {
