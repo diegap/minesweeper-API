@@ -10,17 +10,17 @@ import com.deviget.minesweeper.core.actions.QuestionMarkCell
 import com.deviget.minesweeper.core.actions.ResumeBoard
 import com.deviget.minesweeper.core.actions.RevealCell
 import com.deviget.minesweeper.core.actions.StartGame
-import com.deviget.minesweeper.core.domain.entities.board.BoardActionCommandName
 import com.deviget.minesweeper.core.domain.entities.board.BoardExceptionVisitor
 import com.deviget.minesweeper.core.domain.entities.board.BoardFactory
 import com.deviget.minesweeper.core.domain.entities.board.BoardFinisher
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatusCommandName
 import com.deviget.minesweeper.core.domain.entities.board.DefaultBoardFactory
+import com.deviget.minesweeper.core.domain.entities.board.command.BoardStatusCommand
 import com.deviget.minesweeper.core.domain.entities.board.command.PauseBoardCommand
 import com.deviget.minesweeper.core.domain.entities.board.command.ResumeBoardCommand
-import com.deviget.minesweeper.core.domain.entities.cell.command.FlagActionCommand
+import com.deviget.minesweeper.core.domain.entities.cell.command.CellCommand
+import com.deviget.minesweeper.core.domain.entities.cell.command.FlagCommand
 import com.deviget.minesweeper.core.domain.entities.cell.command.QuestionMarkCommand
-import com.deviget.minesweeper.core.domain.entities.cell.command.RevealActionCommand
+import com.deviget.minesweeper.core.domain.entities.cell.command.RevealCommand
 import com.deviget.minesweeper.core.domain.entities.miner.DefaultMinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
@@ -29,6 +29,10 @@ import com.deviget.minesweeper.core.domain.repositories.UserRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryBoardIdRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryBoardRepository
 import com.deviget.minesweeper.infra.repositories.InMemoryUserRepository
+import com.deviget.minesweeper.infra.rest.controllers.BoardStatusCommandName
+import com.deviget.minesweeper.infra.rest.controllers.BoardStatusCommandToAction
+import com.deviget.minesweeper.infra.rest.controllers.CellCommandName
+import com.deviget.minesweeper.infra.rest.controllers.CellCommandToAction
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -104,9 +108,16 @@ open class Injector {
 			flagCell: FlagCell,
 			questionMarkCell: QuestionMarkCell
 	) = mapOf(
-			BoardActionCommandName.REVEAL to RevealActionCommand(revealCell),
-			BoardActionCommandName.FLAG to FlagActionCommand(flagCell),
-			BoardActionCommandName.QUESTION to QuestionMarkCommand(questionMarkCell)
+			CellCommandName.REVEAL to RevealCommand(revealCell),
+			CellCommandName.FLAG to FlagCommand(flagCell),
+			CellCommandName.QUESTION to QuestionMarkCommand(questionMarkCell)
 	)
 
+	@Bean
+	open fun cellCommand(cellCommandMap: Map<CellCommandName, CellCommand>) =
+			CellCommandToAction(cellCommandMap)
+
+	@Bean
+	open fun statusCommand(boardStatusCommandMap: Map<BoardStatusCommandName, BoardStatusCommand>) =
+			BoardStatusCommandToAction(boardStatusCommandMap)
 }

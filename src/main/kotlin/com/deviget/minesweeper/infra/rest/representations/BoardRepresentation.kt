@@ -18,7 +18,7 @@ data class BoardRepresentation(
 		@JsonProperty val mines: Int
 ) {
 
-	fun toActionData() =
+	fun toDomain() =
 			StartGame.ActionData(
 					Rows(rows),
 					Cols(cols),

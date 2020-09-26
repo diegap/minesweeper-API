@@ -4,11 +4,7 @@ import com.deviget.minesweeper.core.actions.GetBoardById
 import com.deviget.minesweeper.core.actions.GetUser
 import com.deviget.minesweeper.core.actions.StartGame
 import com.deviget.minesweeper.core.domain.entities.UserName
-import com.deviget.minesweeper.core.domain.entities.board.BoardActionCommandName
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatusCommandName
-import com.deviget.minesweeper.core.domain.entities.board.command.BoardStatusCommand
-import com.deviget.minesweeper.core.domain.entities.cell.command.CellActionCommand
 import com.deviget.minesweeper.infra.rest.representations.BoardRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardStatusRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
@@ -31,8 +27,8 @@ class BoardController(
 		private val startGame: StartGame,
 		private val getBoardById: GetBoardById,
 		private val getUser: GetUser,
-		private val boardStatusCommandMap: Map<BoardStatusCommandName, BoardStatusCommand>,
-		private val cellActionCommandMap: Map<BoardActionCommandName, CellActionCommand>
+		private val statusCommand: BoardStatusCommandToAction,
+		private val cellCommand: CellCommandToAction
 ) {
 
 	@PostMapping("/users/{user-id}/boards")
@@ -41,7 +37,7 @@ class BoardController(
 			@PathVariable("user-id") userName: String
 	) =
 			getUser(UserName(userName))?.let {
-				with(startGame(boardRepresentation.toActionData())) {
+				with(startGame(boardRepresentation.toDomain())) {
 					ResponseEntity(BoardViewRepresentation(this), CREATED)
 				}
 			} ?: ResponseEntity(NOT_FOUND)
@@ -51,7 +47,7 @@ class BoardController(
 			@PathVariable("user-id") userName: String,
 			@PathVariable("board-id") boardId: String
 	) =
-			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
+			getBoardById(boardId)?.let {
 				if (it.user.userName.value != userName) ResponseEntity(NOT_FOUND)
 				else ResponseEntity(BoardViewRepresentation(it), OK)
 			} ?: ResponseEntity(NOT_FOUND)
@@ -61,16 +57,9 @@ class BoardController(
 	fun actuate(@PathVariable("board-id") boardId: String,
 				@RequestBody position: PositionRepresentation
 	) =
-			getBoardById(BoardId(UUID.fromString(boardId)))?.let { it ->
-
+			getBoardById(boardId)?.let { it ->
 				if (it.status.isFinished()) return ResponseEntity(BoardViewRepresentation(it), OK)
-
-				position.toCommand()?.run {
-					cellActionCommandMap[this]?.execute(it, position.toDomain())
-				}?.let {
-					ResponseEntity(BoardViewRepresentation(it), OK)
-				}
-
+				cellCommand(position, it)
 			} ?: ResponseEntity(NOT_FOUND)
 
 	@PutMapping("/users/{user-id}/boards/{board-id}/status")
@@ -78,18 +67,12 @@ class BoardController(
 			@PathVariable("board-id") boardId: String,
 			@RequestBody boardStatusRepresentation: BoardStatusRepresentation
 	) =
-			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
-				return when {
-					it.status.isFinished() -> CONFLICT
+			getBoardById(boardId)?.let {
+				if (it.status.isFinished()) return CONFLICT
+				statusCommand(boardStatusRepresentation, it)
+				OK
 
-					boardStatusRepresentation.toDomain() != null -> {
-						with(boardStatusRepresentation.toDomain()) {
-							boardStatusCommandMap[this]?.execute(it)
-						}
-						OK
-					}
-
-					else -> CONFLICT
-				}
 			} ?: NOT_FOUND
+
+	private fun getBoardById(boardId: String) = getBoardById(BoardId(UUID.fromString(boardId)))
 }

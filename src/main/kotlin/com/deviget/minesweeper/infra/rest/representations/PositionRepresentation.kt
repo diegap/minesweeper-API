@@ -1,7 +1,7 @@
 package com.deviget.minesweeper.infra.rest.representations
 
-import com.deviget.minesweeper.core.domain.entities.board.BoardActionCommandName
 import com.deviget.minesweeper.core.domain.entities.position.Coordinates
+import com.deviget.minesweeper.infra.rest.controllers.CellCommandName
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class PositionRepresentation(
@@ -11,9 +11,6 @@ data class PositionRepresentation(
 ) {
 	fun toDomain() = Coordinates(Pair(x.toInt(), y.toInt()))
 
-	fun toCommand() = try {
-		BoardActionCommandName.valueOf(command.toUpperCase())
-	} catch (exception: Exception) {
-		null
-	}
+	fun toCommand() = CellCommandName.valueOf(command.toUpperCase())
+
 }

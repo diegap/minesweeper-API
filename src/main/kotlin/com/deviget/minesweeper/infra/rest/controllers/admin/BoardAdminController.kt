@@ -5,7 +5,8 @@ import com.deviget.minesweeper.core.actions.GetBoards
 import com.deviget.minesweeper.core.domain.entities.board.BoardId
 import com.deviget.minesweeper.infra.rest.representations.AdminBoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardResumeRepresentation
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -25,12 +26,12 @@ class BoardAdminController(
 					.map(UUID::toString)
 					.toSet()
 					.run {
-						ResponseEntity(BoardResumeRepresentation(boardIds = this), HttpStatus.OK)
+						ResponseEntity(BoardResumeRepresentation(boardIds = this), OK)
 					}
 
 	@GetMapping("/admin/boards/{board-id}")
 	fun retrieveBoard(@PathParam("board-id") boardId: String) =
 			getBoardById(BoardId(UUID.fromString(boardId)))?.let {
-				ResponseEntity(AdminBoardViewRepresentation(it), HttpStatus.OK)
-			} ?: ResponseEntity(HttpStatus.NOT_FOUND)
+				ResponseEntity(AdminBoardViewRepresentation(it), OK)
+			} ?: ResponseEntity(NOT_FOUND)
 }

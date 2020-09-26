@@ -1,15 +1,11 @@
 package com.deviget.minesweeper.infra.rest.representations
 
-import com.deviget.minesweeper.core.domain.entities.board.BoardStatusCommandName
+import com.deviget.minesweeper.infra.rest.controllers.BoardStatusCommandName
 
 data class BoardStatusRepresentation(val status: String) {
-	fun toDomain(): BoardStatusCommandName? {
+	fun toDomain(): BoardStatusCommandName {
 		status.toUpperCase().apply {
-			return try {
-				BoardStatusCommandName.valueOf(this)
-			} catch (exception: Exception) {
-				null
-			}
+			return BoardStatusCommandName.valueOf(this)
 		}
 	}
 }

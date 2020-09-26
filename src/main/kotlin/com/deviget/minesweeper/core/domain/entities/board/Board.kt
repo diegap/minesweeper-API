@@ -15,17 +15,6 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 data class BoardId(val value: UUID)
 
-enum class BoardStatusCommandName {
-	PAUSE,
-	RESUME
-}
-
-enum class BoardActionCommandName {
-	REVEAL,
-	FLAG,
-	QUESTION
-}
-
 enum class BoardStatus {
 	RUNNING,
 	PAUSED,
