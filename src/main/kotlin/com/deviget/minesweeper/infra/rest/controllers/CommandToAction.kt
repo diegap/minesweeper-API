@@ -3,6 +3,7 @@ package com.deviget.minesweeper.infra.rest.controllers
 import com.deviget.minesweeper.core.domain.entities.board.Board
 import com.deviget.minesweeper.core.domain.entities.board.command.BoardStatusCommand
 import com.deviget.minesweeper.core.domain.entities.cell.command.CellCommand
+import com.deviget.minesweeper.core.domain.exceptions.PausedBoardInteractionException
 import com.deviget.minesweeper.infra.rest.representations.BoardStatusRepresentation
 import com.deviget.minesweeper.infra.rest.representations.BoardViewRepresentation
 import com.deviget.minesweeper.infra.rest.representations.PositionRepresentation
@@ -14,6 +15,7 @@ class CellCommandToAction(
 ) {
 	operator fun invoke(position: PositionRepresentation, board: Board) =
 			position.toCommand().run {
+				if (board.isPaused) throw PausedBoardInteractionException()
 				cellCommandMap[this]?.execute(board, position.toDomain())?.let {
 					ResponseEntity(BoardViewRepresentation(it), HttpStatus.OK)
 				} ?: ResponseEntity(HttpStatus.NOT_FOUND)

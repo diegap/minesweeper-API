@@ -1,6 +1,7 @@
 package com.deviget.minesweeper.infra.rest.controllers
 
 import com.deviget.minesweeper.core.domain.exceptions.CellCannotBeRevealedException
+import com.deviget.minesweeper.core.domain.exceptions.PausedBoardInteractionException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CONFLICT
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
@@ -18,6 +19,10 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
 	@ExceptionHandler(IllegalArgumentException::class)
 	fun handle(exception: Exception) =
 			ResponseEntity(ApiError("Invalid argument provided"), BAD_REQUEST)
+
+	@ExceptionHandler
+	fun handle(exception: PausedBoardInteractionException) =
+			ResponseEntity(ApiError("Cannot interact with paused board"), CONFLICT)
 
 	@ExceptionHandler
 	fun handle(exception: CellCannotBeRevealedException) =

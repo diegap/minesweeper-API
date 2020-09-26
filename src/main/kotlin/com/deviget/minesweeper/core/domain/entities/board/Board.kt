@@ -91,6 +91,7 @@ class Board(
 	}
 
 	val isFinished get() = status.isFinished()
+	val isPaused get() = status == PAUSED
 
 	val getElapsedTime: Long
 		get() = SECONDS.convert(elapsedTime.sum(), TimeUnit.NANOSECONDS)
