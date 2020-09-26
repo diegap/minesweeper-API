@@ -48,9 +48,8 @@ data class BoardViewRepresentation(
 				}
 
 		private fun mapValue(board: Board, position: Position) =
-				if (board.isFinished.not()) board.cellsByPosition[position]?.getValue()?.value.orEmpty()
-				else board.cellsByPosition[position]?.getHiddenValue()?.value.orEmpty()
-
+				if (board.isFinished.not()) board.getCell(position)?.getValue()?.value.orEmpty()
+				else board.getCell(position)?.getHiddenValue()?.value.orEmpty()
 	}
 
 }
