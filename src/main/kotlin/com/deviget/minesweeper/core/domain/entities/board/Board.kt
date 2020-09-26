@@ -38,31 +38,31 @@ class Board(
 	fun getCell(position: Position): Cell? = cellsByPosition[position]
 
 	fun flagCell(position: Position) {
-		cellsByPosition[position]?.let {
+		getCell(position)?.let {
 			cellsByPosition[position] = FlaggedCell(it)
 		}
 	}
 
 	fun unflagCell(position: Position) {
-		cellsByPosition[position]?.let {
-			cellsByPosition[position] = (it as FlaggedCell).cell
+		getCell(position)?.let {
+			cellsByPosition[position] = (it as FlaggedCell).unMark()
 		}
 	}
 
 	fun questionMarkCell(position: Position) {
-		cellsByPosition[position]?.let {
+		getCell(position)?.let {
 			cellsByPosition[position] = QuestionMarkedCell(it)
 		}
 	}
 
 	fun unquestionMarkCell(position: Position) {
-		cellsByPosition[position]?.let {
-			cellsByPosition[position] = (it as QuestionMarkedCell).cell
+		getCell(position)?.let {
+			cellsByPosition[position] = (it as QuestionMarkedCell).unMark()
 		}
 	}
 
 	fun reveal(position: Position): Board {
-		cellsByPosition[position]?.let {
+		getCell(position)?.let {
 			it.reveal()
 			safeReveal(position.adjacentPositions)
 			checkRevealedCells()
@@ -99,7 +99,7 @@ class Board(
 	private fun safeReveal(positions: Set<Position>) {
 		if (positions.touchAnyMine()) return
 		positions.forEach { position ->
-			cellsByPosition[position]?.reveal()
+			getCell(position)?.reveal()
 			safeReveal(
 					position.adjacentPositions
 							.filter { it.isHidden() }
@@ -117,11 +117,11 @@ class Board(
 
 	private fun checkRevealedCells() {
 		val (_, safePositions) = cellsByPosition.keys.partition { it in minedPositions }
-		if (safePositions.size == safePositions.map { cellsByPosition[it] }.filter { it?.isVisible() == true }.size)
+		if (safePositions.size == safePositions.map { getCell(it) }.filter { it?.isVisible() == true }.size)
 			throw GameOverSuccessException()
 	}
 
-	private fun Position.isHidden() = cellsByPosition[this]?.isVisible()?.not() ?: true
+	private fun Position.isHidden() = getCell(this)?.isVisible()?.not() ?: true
 
 	private fun Set<Position>.touchAnyMine() =
 			this.intersect(minedPositions).isNotEmpty()

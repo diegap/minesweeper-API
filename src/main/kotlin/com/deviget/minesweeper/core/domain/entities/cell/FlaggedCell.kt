@@ -4,7 +4,7 @@ import com.deviget.minesweeper.core.domain.entities.cell.CellValueType.FLAG
 import com.deviget.minesweeper.core.domain.entities.position.Position
 import com.deviget.minesweeper.core.domain.exceptions.CellCannotBeRevealedException
 
-class FlaggedCell(val cell: Cell) : Cell {
+class FlaggedCell(private val cell: Cell) : Cell, UnMarkableCell {
 	override fun reveal() = throw CellCannotBeRevealedException()
 	override fun getPosition(): Position {
 		return cell.getPosition()
@@ -19,4 +19,6 @@ class FlaggedCell(val cell: Cell) : Cell {
 	}
 
 	override fun getHiddenValue() = cell.getHiddenValue()
+
+	override fun unMark() = cell
 }

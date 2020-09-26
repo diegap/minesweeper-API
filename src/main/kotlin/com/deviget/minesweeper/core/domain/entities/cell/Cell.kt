@@ -9,3 +9,7 @@ interface Cell {
 	fun getValue(): CellValue
 	fun getHiddenValue(): CellValue
 }
+
+interface UnMarkableCell {
+	fun unMark(): Cell
+}
