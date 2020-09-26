@@ -8,6 +8,8 @@ import com.deviget.minesweeper.core.actions.board.StartGame
 import com.deviget.minesweeper.core.actions.cell.FlagCell
 import com.deviget.minesweeper.core.actions.cell.QuestionMarkCell
 import com.deviget.minesweeper.core.actions.cell.RevealCell
+import com.deviget.minesweeper.core.actions.cell.UnflagCell
+import com.deviget.minesweeper.core.actions.cell.UnquestionMarkCell
 import com.deviget.minesweeper.core.actions.user.CreateUser
 import com.deviget.minesweeper.core.actions.user.GetUser
 import com.deviget.minesweeper.core.domain.entities.board.BoardExceptionVisitor
@@ -21,6 +23,8 @@ import com.deviget.minesweeper.core.domain.entities.cell.command.CellCommand
 import com.deviget.minesweeper.core.domain.entities.cell.command.FlagCommand
 import com.deviget.minesweeper.core.domain.entities.cell.command.QuestionMarkCommand
 import com.deviget.minesweeper.core.domain.entities.cell.command.RevealCommand
+import com.deviget.minesweeper.core.domain.entities.cell.command.UnflagCellCommand
+import com.deviget.minesweeper.core.domain.entities.cell.command.UnquestionMarkCommand
 import com.deviget.minesweeper.core.domain.entities.miner.DefaultMinerRandomizer
 import com.deviget.minesweeper.core.domain.entities.miner.MinerRandomizer
 import com.deviget.minesweeper.core.domain.repositories.BoardIdRepository
@@ -70,7 +74,13 @@ open class Injector {
 	open fun flagCell(boardRepository: BoardRepository) = FlagCell(boardRepository)
 
 	@Bean
+	open fun unflagCell(boardRepository: BoardRepository) = UnflagCell(boardRepository)
+
+	@Bean
 	open fun questionMarkCell(boardRepository: BoardRepository) = QuestionMarkCell(boardRepository)
+
+	@Bean
+	open fun unquestionMarkCell(boardRepository: BoardRepository) = UnquestionMarkCell(boardRepository)
 
 	@Bean
 	open fun pauseBoard(boardRepository: BoardRepository) = PauseBoard(boardRepository)
@@ -106,11 +116,15 @@ open class Injector {
 	open fun cellActionCommandMap(
 			revealCell: RevealCell,
 			flagCell: FlagCell,
-			questionMarkCell: QuestionMarkCell
+			unflagCell: UnflagCell,
+			questionMarkCell: QuestionMarkCell,
+			unQuestionMarkCell: UnquestionMarkCell
 	) = mapOf(
 			CellCommandName.REVEAL to RevealCommand(revealCell),
 			CellCommandName.FLAG to FlagCommand(flagCell),
-			CellCommandName.QUESTION to QuestionMarkCommand(questionMarkCell)
+			CellCommandName.UNFLAG to UnflagCellCommand(unflagCell),
+			CellCommandName.QUESTION to QuestionMarkCommand(questionMarkCell),
+			CellCommandName.UNQUESTION to UnquestionMarkCommand(unQuestionMarkCell)
 	)
 
 	@Bean

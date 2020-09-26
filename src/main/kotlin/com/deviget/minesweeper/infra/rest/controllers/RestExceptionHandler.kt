@@ -19,10 +19,11 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
 	fun handle(exception: Exception) =
 			ResponseEntity(ApiError("Invalid argument provided"), BAD_REQUEST)
 
+	@ExceptionHandler
+	fun handle(exception: CellCannotBeRevealedException) =
+			ResponseEntity(ApiError("Cell cannot be revealed"), CONFLICT)
 
-	@ExceptionHandler(
-			IllegalStateException::class,
-			CellCannotBeRevealedException::class)
+	@ExceptionHandler(IllegalStateException::class)
 	fun handle(exception: RuntimeException) =
 			ResponseEntity(ApiError("Invalid action provided for current state"), CONFLICT)
 

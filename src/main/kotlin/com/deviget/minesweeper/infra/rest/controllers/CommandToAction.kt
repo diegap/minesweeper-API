@@ -38,5 +38,7 @@ enum class BoardStatusCommandName {
 enum class CellCommandName {
 	REVEAL,
 	FLAG,
-	QUESTION
+	UNFLAG,
+	QUESTION,
+	UNQUESTION
 }

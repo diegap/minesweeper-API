@@ -4,6 +4,7 @@ import com.deviget.minesweeper.core.domain.entities.User
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.PAUSED
 import com.deviget.minesweeper.core.domain.entities.board.BoardStatus.RUNNING
 import com.deviget.minesweeper.core.domain.entities.cell.Cell
+import com.deviget.minesweeper.core.domain.entities.cell.CellValue
 import com.deviget.minesweeper.core.domain.entities.cell.FlaggedCell
 import com.deviget.minesweeper.core.domain.entities.cell.QuestionMarkedCell
 import com.deviget.minesweeper.core.domain.entities.position.Edge
@@ -42,9 +43,21 @@ class Board(
 		}
 	}
 
+	fun unflagCell(position: Position) {
+		cellsByPosition[position]?.let {
+			cellsByPosition[position] = (it as FlaggedCell).cell
+		}
+	}
+
 	fun questionMarkCell(position: Position) {
 		cellsByPosition[position]?.let {
 			cellsByPosition[position] = QuestionMarkedCell(it)
+		}
+	}
+
+	fun unquestionMarkCell(position: Position) {
+		cellsByPosition[position]?.let {
+			cellsByPosition[position] = (it as QuestionMarkedCell).cell
 		}
 	}
 
@@ -95,6 +108,13 @@ class Board(
 		}
 	}
 
+	private fun getCellValue(position: Position): CellValue {
+		val rawValue =
+				if (minedPositions.contains(position)) -1
+				else position.adjacentPositions.intersect(minedPositions).size
+		return CellValue(rawValue.toString())
+	}
+
 	private fun checkRevealedCells() {
 		val (_, safePositions) = cellsByPosition.keys.partition { it in minedPositions }
 		if (safePositions.size == safePositions.map { cellsByPosition[it] }.filter { it?.isVisible() == true }.size)
@@ -102,6 +122,8 @@ class Board(
 	}
 
 	private fun Position.isHidden() = cellsByPosition[this]?.isVisible()?.not() ?: true
+
 	private fun Set<Position>.touchAnyMine() =
 			this.intersect(minedPositions).isNotEmpty()
+
 }
