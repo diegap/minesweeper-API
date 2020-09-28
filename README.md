@@ -11,7 +11,7 @@ The solution follows [Interaction-Driven Design](https://codurance.com/2017/12/0
 - [Mockito-Kotlin](https://github.com/nhaarman/mockito-kotlin) 2.2.0
 - [Kluent](https://github.com/MarkusAmshove/Kluent) 1.61
 - [Springboot](https://spring.io/projects/spring-boot) 2.3.4.RELEASE
-- Pesistence implemented by repositories in-memory
+- Persistence implemented by repositories in-memory
 
 #### System requirements
 In order to build and run the solution, you need to install:
