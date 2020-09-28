@@ -106,3 +106,6 @@ PUT /users/:userName/boards/:boardId/cells
 The allowed values for **command** are "REVEAL", "FLAG", "UNFLAG", "QUESTION" and "UNQUESTION".
 
 Have in mind that a cell marked as "FLAG" or "QUESTION" cannot be revealed without being "UNFLAG" or "UNQUESTION" first.
+
+#### DEMO
+You can play with the latest deployed version at [DEMO](https://minesweeper-kata.herokuapp.com/admin/boards)
